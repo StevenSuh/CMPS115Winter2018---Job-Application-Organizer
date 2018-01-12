@@ -1,1 +1,1 @@
-# CMPS115Winter2018
+# CMPS115Winter2018 - Job Application Organizer
