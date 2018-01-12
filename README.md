@@ -1,5 +1,5 @@
 # CMPS115Winter2018 - Job Application Organizer
-Current Members:
+Current Members:  
 Steven Suh  
 Drew Caltagirone  
 Jeff Yang  
