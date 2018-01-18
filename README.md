@@ -1,4 +1,4 @@
-# CMPS115Winter2018 - Job Application Organizer
+# CMPS115Winter2018 - Job Application Organizer - onCareer
 Current Members:  
 Steven Suh  
 Drew Caltagirone  
