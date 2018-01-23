@@ -13,6 +13,7 @@ class App extends Component {
         <Layout>
             <Switch>
                 {/* <Route path='/' component = {} /> */}
+                <Route path='/login' component = {Login} />
             </Switch>
 
         </Layout>

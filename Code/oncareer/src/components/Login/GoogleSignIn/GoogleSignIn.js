@@ -1,6 +1,5 @@
 /* global gapi */
 import React, { Component } from 'react';
-import axios from 'axios';
 import classes from './GoogleSignIn.css';
 
 
