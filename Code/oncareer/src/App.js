@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import Layout from './hoc/Layout/Layout';
+import LandingPage from './components/LandingPage/LandingPage';
 
 import { Route, Switch } from 'react-router-dom';
 
@@ -13,11 +14,10 @@ class App extends Component {
         <Layout>
             <Switch>
                 {/* <Route path='/' component = {} /> */}
-                <Route path='/login' component = {Login} />
+                <Route path='/' exact component = {LandingPage} />
+                <Route path='/login' exact component = {Login} />
             </Switch>
-
         </Layout>
-
       </div>
     );
   }

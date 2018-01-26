@@ -5,7 +5,7 @@
 
 .container {
   margin: 0 auto;
-  padding: 0 0 40px;
+  padding: 0 0 5px;
   max-width: 380px;
 }
 
@@ -13,11 +13,16 @@
   margin-bottom: 15px;
 }
 
+.lead {
+  font-size: 1.25em;
+  /* font-weight: bold; */
+}
+
 .button {
   display: block;
   box-sizing: border-box;
   margin: 0;
-  padding: 10px 16px;
+  padding: 14px 16px;
   width: 100%;
   outline: 0;
   border: 1px solid #373277;

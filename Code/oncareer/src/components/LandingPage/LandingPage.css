@@ -1,0 +1,43 @@
+.about {
+  background-color: white;
+  position:absolute;
+  height: 100%;
+  width: 100%;
+}
+.heroimage {
+  position: fixed;
+  margin: 150px auto;
+  height: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+
+}
+
+.herotext {
+  text-align: center;
+  position: absolute;
+  top: 0%;
+  padding-bottom: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+}
+
+.herotext button {
+  position: absolute;
+  margin-top: 50%;
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px 25px;
+  color: black;
+  background-color: #ddd;
+  text-align: center;
+  cursor: pointer;
+}
+
+.herotext button:hover {
+  background-color: #555;
+  color: white;
+}
