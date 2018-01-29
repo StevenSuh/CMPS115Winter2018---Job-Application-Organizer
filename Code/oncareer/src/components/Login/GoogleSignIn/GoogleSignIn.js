@@ -8,6 +8,7 @@ class GoogleSignIn extends React.Component {
   constructor(props){
       super(props);
       this.onSignIn = this.onSignIn.bind(this)
+      this.signOut = this.signOut.bind(this)
   }
 
 
@@ -24,6 +25,13 @@ class GoogleSignIn extends React.Component {
       });
   }
 
+  signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    })
+    this.props.logOut()
+  }
 
   onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
@@ -43,8 +51,10 @@ class GoogleSignIn extends React.Component {
               Log in with your google account.
             </p>
             {/* data-onsuccess={this.onSignIn} */}
+
             <div id='my-signin2' className={classes.formGroup}>
            </div>
+           <button onClick={this.signOut}>Sign out (Temp button)</button>
          </div>
        </div>
      )

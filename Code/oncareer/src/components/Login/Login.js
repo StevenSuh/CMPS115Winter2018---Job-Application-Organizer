@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import GoogleSignIn from './GoogleSignIn/GoogleSignIn';
+import Auth from './Auth'
 
 class Login extends React.Component {
 
@@ -20,6 +21,8 @@ class Login extends React.Component {
     this.getUser = this.getUser.bind(this)
     this.loadUserData = this.loadUserData.bind(this)
     this.loadData = this.loadData.bind(this)
+    this.configureUser = this.configureUser.bind(this)
+    this.logOut = this.logOut.bind(this)
   }
 
   loadData(){
@@ -34,7 +37,6 @@ class Login extends React.Component {
 
   loadUserData(){
     var url = this.state.url + "acc/41"
-    var user = []
     axios.get(url)
       .then(res => {
         this.setState({...this.state, data: res.data});
@@ -42,33 +44,46 @@ class Login extends React.Component {
     console.log(this.state.data)
   }
 
-  getUser(id, name, email){
-    var obj = {id, name, email}
-    var url = this.state.url + "acc/41"
-    var arr = null
-    this.loadUserData()
-    arr = this.state.data
-    console.log(arr)
-    if(arr.length == 0){
-      var user = {user_id: id, user_name: name, user_email: email}
+  configureUser(data, user){
+    //If there is no user add a user
+    if(data.length == 0){
       axios.post(this.state.url, user)
+        .then(() => {
+          console.log("Added new user")
+        })
         .catch(err => {
           console.log(err)
         })
-      console.log("New user")
     }
     else{
       console.log("Old user")
+      console.log(data)
     }
-    console.log(arr)
+    Auth.authenticateUser(user.user_id)
+  }
 
+  getUser(id, name, email){
+    var obj = {id, name, email}
+    var url = this.state.url + "acc/" + id
+    var arr = null
+    var user = {user_id: id, user_name: name, user_email: email}
+    axios.get(url)
+      .then(res => {
+        this.setState({...this.state, data: res.data})
+        this.configureUser(this.state.data, user)
+      })
+  }
+
+  logOut(){
+      Auth.deauthenticateUser()
   }
 
   render() {
-    this.loadData()
+    var Authenticated = Auth.isUserAuthenticated()
+    console.log(Authenticated)
     return (
             <div>
-                <GoogleSignIn getUser = {this.getUser}/>
+                <GoogleSignIn getUser = {this.getUser} logOut = {this.logOut}/>
             </div>
     );
   }
