@@ -37,7 +37,7 @@ class Login extends React.Component {
     var user = []
     axios.get(url)
       .then(res => {
-        this.setState(data: res.data)
+        this.setState({...this.state, data: res.data});
     })
     console.log(this.state.data)
   }
