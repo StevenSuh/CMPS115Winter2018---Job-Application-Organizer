@@ -1,0 +1,19 @@
+.window {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 60px;  
+  width: calc(100vw - 60px);
+  height: 100vh;
+  background-color: #FAFAFA;
+  padding-top: 25px;
+  padding-left: 25px;
+  overflow: -moz-scrollbars-none;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.window::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
