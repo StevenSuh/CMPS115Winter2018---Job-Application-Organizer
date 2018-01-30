@@ -45,21 +45,25 @@ class Login extends React.Component {
   }
 
   configureUser(data, user){
-    //If there is no user add a user
-    if(data.length == 0){
-      axios.post(this.state.url, user)
-        .then(() => {
-          console.log("Added new user")
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+    if(Auth.isUserAuthenticated())
+      console.log("User is logged in")
     else{
-      console.log("Old user")
-      console.log(data)
+      if(data.length == 0){
+        axios.post(this.state.url, user)
+          .then(() => {
+            console.log("Added new user")
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+      else{
+        console.log("Old user")
+        console.log(data)
+      }
+      Auth.authenticateUser(user.user_id)
+      this.props.history.push("/")
     }
-    Auth.authenticateUser(user.user_id)
   }
 
   getUser(id, name, email){
