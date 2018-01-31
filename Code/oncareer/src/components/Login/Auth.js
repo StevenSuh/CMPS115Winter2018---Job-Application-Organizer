@@ -4,6 +4,7 @@ class Auth{
   }
 
   static isUserAuthenticated(){
+    console.log(localStorage.getItem('id'));
     return localStorage.getItem('id') != null;
   }
 
