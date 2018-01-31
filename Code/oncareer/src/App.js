@@ -17,8 +17,9 @@ class App extends Component {
         <Layout>
             <Switch>
                 {/* <Route path='/' component = {} /> */}
-                <Route path='/' exact component = {Login} />
-                {/* <Route path='/login' exact component = {LandingPage} /> */}
+                {Auth.isUserAuthenticated() && <Route path='/' exact component={LandingPage} />}
+                {!Auth.isUserAuthenticated() && <Route path='/' exact component={Login} />}
+                <Route path='/login' exact component = {LandingPage} />
                 <Route path='/app' exact component = {Application} />
             </Switch>
         </Layout>
