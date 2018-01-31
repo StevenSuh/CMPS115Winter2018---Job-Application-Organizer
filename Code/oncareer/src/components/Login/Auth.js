@@ -1,3 +1,5 @@
+import obj from './GoogleSignIn/GoogleSignIn'
+
 class Auth{
   static authenticateUser(id){
     localStorage.setItem('id', id);
@@ -14,6 +16,17 @@ class Auth{
 
   static deauthenticateUser() {
     localStorage.removeItem('id');
+  }
+
+  static storeGapi(obj){
+    localStorage.setItem('gapi', obj)
+    console.log(obj)
+  }
+
+  static logOut(){
+    var gapi = localStorage.getItem('gapi')
+    obj.getGapi();
+    Auth.deauthenticateUser()
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Auth from '../../Login/Auth'
 import classes from './styles.css';
 
 class Sidebar extends Component {
@@ -7,6 +7,7 @@ class Sidebar extends Component {
     super(props);
 
     this.onButtonClick = this.onButtonClick.bind(this);
+    this.logOut = this.logOut.bind(this)
   }
 
   onButtonClick(event) {
@@ -15,12 +16,19 @@ class Sidebar extends Component {
     this.props.compUpdate(event.currentTarget.getAttribute('data-class'));
   }
 
+  //Logs out, will not get props automatically that is why it's passed in from
+  //the parent React component
+  logOut(){
+    Auth.logOut()
+    this.props.history.push("/")
+  }
+
   render() {
     return (
       <div className={`${classes.sidebar}`}>
         <div className={`${classes.top}`}>
-          <button 
-            className={`${classes.button}`} 
+          <button
+            className={`${classes.button}`}
             data-class="profile"
             onClick={this.onButtonClick}
           >
@@ -29,7 +37,7 @@ class Sidebar extends Component {
             </div>
           </button>
 
-          <button 
+          <button
             className={`${classes.button} ${classes.active}`}
             data-class="dashboard"
             onClick={this.onButtonClick}
@@ -39,7 +47,7 @@ class Sidebar extends Component {
             </svg>
           </button>
 
-          <button 
+          <button
             className={`${classes.button}`}
             data-class="calendar"
             onClick={this.onButtonClick}
@@ -49,7 +57,7 @@ class Sidebar extends Component {
             </svg>
           </button>
 
-          <button 
+          <button
             className={`${classes.button}`}
             data-class="analytics"
             onClick={this.onButtonClick}
@@ -67,7 +75,7 @@ class Sidebar extends Component {
             </svg>
           </button>
 
-          <button className={`${classes.button}`}>
+          <button className={`${classes.button}`} onClick={this.logOut}>
             <svg width="24" height="24" viewBox="0 0 32 32">
               <path fill="#FAFAFA" d="M 19.6978 22.3822L 24.3022 17.7778L 7.11111 17.7778L 7.11111 14.2222L 24.3022 14.2222L 19.6978 9.61778L 22.2222 7.11111L 31.1111 16L 22.2222 24.8889L 19.6978 22.3822ZM 28.4444 0C 29.3874 7.89492e-16 30.2918 0.374602 30.9586 1.0414C 31.6254 1.70819 32 2.61256 32 3.55556L 32 11.8578L 28.4444 8.30222L 28.4444 3.55556L 3.55556 3.55556L 3.55556 28.4444L 28.4444 28.4444L 28.4444 23.6978L 32 20.1422L 32 28.4444C 32 29.3874 31.6254 30.2918 30.9586 30.9586C 30.2918 31.6254 29.3874 32 28.4444 32L 3.55556 32C 1.58222 32 0 30.4 0 28.4444L 0 3.55556C 0 1.58222 1.58222 0 3.55556 0L 28.4444 0Z"/>
             </svg>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import GoogleSignIn from './GoogleSignIn/GoogleSignIn';
+import obj from './GoogleSignIn/GoogleSignIn';
 import Auth from './Auth'
+var GoogleSignIn = obj.GoogleSignIn
 
 class Login extends React.Component {
 

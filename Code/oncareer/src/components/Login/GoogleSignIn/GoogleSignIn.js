@@ -1,7 +1,14 @@
 /* global gapi */
 import React, { Component } from 'react';
 import classes from './GoogleSignIn.css';
+import Auth from '../Auth'
 
+function getGapi(){
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  })
+}
 
 class GoogleSignIn extends React.Component {
 
@@ -9,12 +16,16 @@ class GoogleSignIn extends React.Component {
       super(props);
       this.onSignIn = this.onSignIn.bind(this)
       this.signOut = this.signOut.bind(this)
+      this.sayHello = this.sayHello.bind(this)
   }
 
-
+  sayHello(){
+    alert("Hello")
+  }
 
   componentDidMount() {
-      console.log('this mounted')
+      console.log('GoogleSignIn mounted')
+      Auth.storeGapi(gapi)
       gapi.signin2.render('my-signin2', {
           'scope': 'profile email',
           'width': '380',
@@ -26,10 +37,7 @@ class GoogleSignIn extends React.Component {
   }
 
   signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    })
+    Auth.logOut()
     this.props.logOut()
   }
 
@@ -62,5 +70,12 @@ class GoogleSignIn extends React.Component {
 
  }
 
+//Need to be able to access both GoogleSignIn and getGapi so finalObj wraps
+//both of these into one object and then we can access them individually as
+//on module. If you have a better solution please let me know!
+var finalObj = {
+  GoogleSignIn: GoogleSignIn,
+  getGapi: getGapi
+}
 
-export default GoogleSignIn;
+export default finalObj;
