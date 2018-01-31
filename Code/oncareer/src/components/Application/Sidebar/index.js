@@ -19,8 +19,11 @@ class Sidebar extends Component {
   //Logs out, will not get props automatically that is why it's passed in from
   //the parent React component
   logOut(){
-    Auth.logOut()
-    this.props.history.push("/")
+    const callback = () => {
+      this.props.history.push('/');
+    }
+
+    Auth.logOut(callback); // pass a callback
   }
 
   render() {

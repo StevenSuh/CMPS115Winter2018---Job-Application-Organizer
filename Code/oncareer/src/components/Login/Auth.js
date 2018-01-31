@@ -15,7 +15,7 @@ class Auth{
   }
 
   static deauthenticateUser() {
-    localStorage.removeItem('id');
+    localStorage.clear();
   }
 
   static storeGapi(obj){
@@ -23,10 +23,10 @@ class Auth{
     console.log(obj)
   }
 
-  static logOut(){
+  static logOut(callback) {
     var gapi = localStorage.getItem('gapi')
-    obj.getGapi();
-    Auth.deauthenticateUser()
+    Auth.deauthenticateUser();
+    obj.getGapi(callback);
   }
 }
 
