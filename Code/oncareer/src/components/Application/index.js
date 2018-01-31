@@ -36,10 +36,11 @@ class Application extends Component {
 
     return (
       <div className="application">
-        <Sidebar 
+        <Sidebar
           compUpdate={this.updateView}
+          history={this.props.history}
         />
-        <Window 
+        <Window
           compView={this.state.view}
         />
       </div>
