@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import obj from './GoogleSignIn/GoogleSignIn';
 import Auth from './Auth'
 var GoogleSignIn = obj.GoogleSignIn
@@ -46,9 +47,9 @@ class Login extends React.Component {
   }
 
   configureUser(data, user){
-    if(Auth.isUserAuthenticated())
-      console.log("User is logged in")
-    else{
+    if(Auth.isUserAuthenticated()) {
+      console.log("User is logged in");
+    }else{
       if(data.length == 0){
         axios.post(this.state.url, user)
           .then(() => {
@@ -63,7 +64,12 @@ class Login extends React.Component {
         console.log(data)
       }
       Auth.authenticateUser(user.user_id)
-      this.props.history.push("/")
+
+      // Login successful!
+      // loading? confirmation message?
+
+      // redirect to app
+      this.props.history.push('/app');
     }
   }
 
@@ -87,12 +93,15 @@ class Login extends React.Component {
     var Authenticated = Auth.isUserAuthenticated()
     console.log(Authenticated)
     return (
-            <div>
-                <GoogleSignIn getUser = {this.getUser} logOut = {this.logOut}/>
-            </div>
+      <div>
+        <GoogleSignIn 
+          getUser={this.getUser} 
+          logOut={this.logOut}
+        />
+      </div>
     );
   }
 
 }
 
-export default Login;
+export default withRouter(Login);

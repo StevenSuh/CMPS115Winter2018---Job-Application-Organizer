@@ -3,10 +3,16 @@ import React, { Component } from 'react';
 import classes from './GoogleSignIn.css';
 import Auth from '../Auth'
 
-function getGapi(){
+function getGapi(callback){
   var auth2 = gapi.auth2.getAuthInstance();
+  if (!auth2) {
+    gapi.auth2.init();
+    auth2 = gapi.auth2.getAuthInstance();
+  }
+
   auth2.signOut().then(function () {
     console.log('User signed out.');
+    callback();
   })
 }
 
@@ -16,22 +22,17 @@ class GoogleSignIn extends React.Component {
       super(props);
       this.onSignIn = this.onSignIn.bind(this)
       this.signOut = this.signOut.bind(this)
-      this.sayHello = this.sayHello.bind(this)
-  }
-
-  sayHello(){
-    alert("Hello")
   }
 
   componentDidMount() {
       console.log('GoogleSignIn mounted')
-      Auth.storeGapi(gapi)
+      Auth.storeGapi(gapi);
       gapi.signin2.render('my-signin2', {
           'scope': 'profile email',
-          'width': '380',
+          'width': 230,
           'height': 50,
           'longtitle': true,
-          'theme': 'dark',
+          'theme': 'light',
           'onsuccess': this.onSignIn,
       });
   }
@@ -52,22 +53,11 @@ class GoogleSignIn extends React.Component {
 
   render() {
     return (
-      <div className={classes.root}>
-        <div className={classes.container}>
-          <h1>{this.props.title}</h1>
-            <p className={classes.lead}>
-              Log in with your google account.
-            </p>
-            {/* data-onsuccess={this.onSignIn} */}
-
-            <div id='my-signin2' className={classes.formGroup}>
-           </div>
-           <button onClick={this.signOut}>Sign out (Temp button)</button>
-         </div>
-       </div>
-     )
+      <div className={classes.container}>
+        <div id='my-signin2' className={classes.formGroup} />
+      </div>
+    )
    }
-
  }
 
 //Need to be able to access both GoogleSignIn and getGapi so finalObj wraps
