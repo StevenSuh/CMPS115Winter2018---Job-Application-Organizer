@@ -12,7 +12,7 @@ router.get('/', function(req, res, next){
   });
 });
 
-/* GET SINGLE USER BY ID */
+/* GET SINGLE BOARD BY ID (not USER_ID) */
 router.get('/:id', function(req, res, next){
   Boards.findById(req.params.id, function(err, post){
     if(err) return next(err);
@@ -20,7 +20,7 @@ router.get('/:id', function(req, res, next){
   });
 });
 
-/* GET USER BY USER_ID */
+/* GET BOARD BY USER_ID */
 router.get('/acc/:id', function(req, res, next){
   Boards.find({user_id: req.params.id}, function(err, post){
     if(err) return next(err)
@@ -29,7 +29,7 @@ router.get('/acc/:id', function(req, res, next){
 })
 
 
-/* SAVE USER */
+/* SAVE BOARD */
 router.post('/', function(req, res, next) {
   Boards.create(req.body, function(err, post){
     if(err) return next(err);
@@ -37,7 +37,7 @@ router.post('/', function(req, res, next) {
   })
 })
 
-/* UPDATE USER */
+/* UPDATE BOARD */
 router.put('/:id', function(req, res, next){
   Boards.findByIdAndUpdate(req.params.id, req.body, function(err, post){
     if(err) return next(err);
@@ -45,7 +45,7 @@ router.put('/:id', function(req, res, next){
   })
 })
 
-/* DELETE USER */
+/* DELETE BOARD */
 router.delete('/:id', function(req, res, next) {
   Boards.findByIdAndRemove(req.params.id, req.body, function(err, post) {
     if(err) return next(err);
