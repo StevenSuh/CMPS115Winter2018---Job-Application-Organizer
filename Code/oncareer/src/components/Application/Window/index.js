@@ -6,6 +6,7 @@ import classes from './styles.css';
 
 import axios from 'axios';
 import Auth from '../../Login/Auth';
+import Calendar from '../../../containers/Calendar/Calendar';
 
 const url = "http://localhost:3001/users/acc/";
 
@@ -32,8 +33,9 @@ class Window extends Component {
         break;
       case 'dashboard':
         view = <Dashboard compUser={this.state.user} />
-        break;        
+        break;
       case 'calendar':
+        view = <Calendar />
         break;
       case 'analytics':
         break;
