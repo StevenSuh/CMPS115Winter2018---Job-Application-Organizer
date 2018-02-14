@@ -15,7 +15,7 @@ class LandingPage extends React.Component {
     }
 
     componentDidMount(){
-      console.log("Landing Page mounted")
+      console.log("Landing Page mounted");
     }
 
     render(){
@@ -38,7 +38,9 @@ class LandingPage extends React.Component {
           </header>
 
           <p className={classes.description}>
-            Organize and keep track of your job applications in an efficient manner
+            Organize and keep track of your job applications in 
+            <br/>
+            an efficient manner
           </p>
 
           <SignIn />

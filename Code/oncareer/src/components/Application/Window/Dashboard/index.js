@@ -24,32 +24,36 @@ class Dashboard extends Component {
             title: 'Software Engineering Intern',
             company: 'Google',
             date: '1/5/2018',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAALTAAAAJGY1NGY1N2ZhLTNmZmUtNGRmZi1iMDgxLTJjZjdkNjNkYmZlOQ.png'
-            // description: ''
+            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAALTAAAAJGY1NGY1N2ZhLTNmZmUtNGRmZi1iMDgxLTJjZjdkNjNkYmZlOQ.png',
+            description: ''
           },
           {
             title: 'Software Engineer Intern/Co-op',
             company: 'Facebook',
             date: '1/3/2018',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAYRAAAAJDVlMzBlYjNiLTAxN2QtNGQxZC1iZTAzLTlmNWQ1OTE4OGY4ZA.png'
+            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAYRAAAAJDVlMzBlYjNiLTAxN2QtNGQxZC1iZTAzLTlmNWQ1OTE4OGY4ZA.png',
+            description: ''
           },
           {
             title: '2018 Summer Internship - Software Development Engineer',
             company: 'Amazon',
             date: '1/2/2018',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAA0ZAAAAJDk1ZjA0ZTJmLWQwYWQtNDEwNS04M2QxLTIwM2UxMTE0NTBkMw.png'
+            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAA0ZAAAAJDk1ZjA0ZTJmLWQwYWQtNDEwNS04M2QxLTIwM2UxMTE0NTBkMw.png',
+            description: ''
           },
           {
             title: 'Software Engineer Internship',
             company: 'Microsoft',
             date: '12/27/2017',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAjfAAAAJGMyYmExNThhLTNlYmMtNDAzYi05MmNmLWFmOTY1NDcyMTFjMA.png'
+            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAjfAAAAJGMyYmExNThhLTNlYmMtNDAzYi05MmNmLWFmOTY1NDcyMTFjMA.png',
+            description: ''
           },
           {
             title: '2018 University Application | Full-Time & Internship',
             company: 'Twitter',
             date: '12/27/2017',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAATdAAAAJGVhNWFjN2Q5LTYzNjYtNDU4YS04ZjcwLWEyMTNhZDA5NTgxNQ.png'
+            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAATdAAAAJGVhNWFjN2Q5LTYzNjYtNDU4YS04ZjcwLWEyMTNhZDA5NTgxNQ.png',
+            description: ''
           }
         ]
       },

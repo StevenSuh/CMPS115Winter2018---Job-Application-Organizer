@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
+const JobsSchema = require('./jobs');
 
 var BoardsSchema = new mongoose.Schema({
-  user_id: String,
   board_name: String,
-  jobs: Array
+  jobs: [JobsSchema],
+  user_id: String
 })
 
 module.exports = mongoose.model('Board', BoardsSchema)

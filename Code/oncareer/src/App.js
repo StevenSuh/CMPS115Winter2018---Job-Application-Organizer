@@ -7,7 +7,11 @@ import Application from './components/Application';
 import { Route, Switch } from 'react-router-dom';
 
 import Login from './components/Login/Login';
-import Auth from './components/Login/Auth'
+import Auth from './components/Login/Auth';
+
+import axios from 'axios';
+window.axios = axios;
+window.Auth = Auth;
 
 class App extends Component {
   render() {
