@@ -15,7 +15,7 @@ class Login extends React.Component {
       name: "",
       email: "",
       newUser: true,
-      url: "http://localhost:3001/users/",
+      url: "http://localhost:3001/",
       data: [],
       mounted: false
     }
@@ -38,7 +38,7 @@ class Login extends React.Component {
   }
 
   loadUserData(){
-    var url = this.state.url + "acc/41"
+    var url = this.state.url + "users/acc/41"
     axios.get(url)
       .then(res => {
         this.setState({...this.state, data: res.data});
@@ -48,20 +48,33 @@ class Login extends React.Component {
 
   configureUser(data, user){
     if(Auth.isUserAuthenticated()) {
+      // already logged in
       console.log("User is logged in");
+
+
     }else{
       if(data.length == 0){
-        axios.post(this.state.url, user)
+        axios.post(this.state.url + 'users/', user)
           .then(() => {
             console.log("Added new user")
           })
           .catch(err => {
             console.log(err)
           })
+        
+        const initBoard = [
+          { board_name: 'Applied', jobs: [], user_id: user.user_id }, 
+          { board_name: 'Interview', jobs: [], user_id: user.user_id }, 
+          { board_name: 'Offer', jobs: [], user_id: user.user_id }, 
+          { board_name: 'Interested', jobs: [], user_id: user.user_id }
+        ];
+        for (let i = 0; i < initBoard.length; i++) {
+          axios.post(this.state.url + 'boards/', initBoard[i]);
+        }
       }
       else{
         console.log("Old user")
-        console.log(data)
+        console.log(data, user)
       }
       Auth.authenticateUser(user.user_id)
 
@@ -75,7 +88,7 @@ class Login extends React.Component {
 
   getUser(id, name, email){
     var obj = {id, name, email}
-    var url = this.state.url + "acc/" + id
+    var url = this.state.url + "users/acc/" + id
     var arr = null
     var user = {user_id: id, user_name: name, user_email: email}
     axios.get(url)

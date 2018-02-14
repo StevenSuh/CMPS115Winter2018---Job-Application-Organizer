@@ -64,7 +64,6 @@
 }
 
 .description {
-  width: 33vw;
   margin: auto;
   margin-top: 40px;
   font-size: 18px;
@@ -72,9 +71,9 @@
 }
 
 .heroimage {
-  position: absolute;
+  position: relative;
   left: 50%;
-  bottom: -25vh;
+  top: 6vh;
   width: 960px;
   transform: translateX(-50%);
   border-radius: 5px;

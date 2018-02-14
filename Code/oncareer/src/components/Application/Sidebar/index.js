@@ -22,7 +22,6 @@ class Sidebar extends Component {
     const callback = () => {
       this.props.history.push('/');
     }
-
     Auth.logOut(callback); // pass a callback
   }
 
