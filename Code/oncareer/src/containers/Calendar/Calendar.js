@@ -14,16 +14,33 @@ BigCalendar.momentLocalizer(moment);
 
 
 class Calendar extends React.Component {
+
+  state = {
+      events: []
+      }
+
   constructor () {
     super();
   }
+
+
   render () {
     return (
           // React Components in JSX look like HTML tags
           <BigCalendar
-            style={{height: '420px',
+            selectable
+            events={this.state.events}
+            step={60}
+            style={{height: '75%',
                     width: '80%'}}
-            events={[]}
+            onSelectSlot={slotInfo =>
+              //handle event adding. add to state.
+              alert(
+                `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
+                `\nend: ${slotInfo.end.toLocaleString()}` +
+                `\naction: ${slotInfo.action}`
+              )
+            }
           />
         )
   }
