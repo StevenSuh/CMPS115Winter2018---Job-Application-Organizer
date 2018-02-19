@@ -74,8 +74,8 @@ class GoogleSignIn extends React.Component {
                 </div>
               </div>
 
-              <span className="abcRioButtonContents" style={{ fontSize: '16px', lineHeight: "48px", marginLeft: '0' }}>
-                Redirect to Application
+              <span className="abcRioButtonContents" style={{ fontSize: '16px', lineHeight: "48px", marginLeft: '-12px' }}>
+                Redirect to App
               </span>
             </div>
           </div>

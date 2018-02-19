@@ -1,15 +1,38 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
-import JobApp from './jobapp';
-import JobAdd from './jobadd';
+import JobApp from './Job/jobapp';
+import JobAdd from './Job/jobadd';
 
 import classes from './styles.css';
 
 class Board extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { board_name: this.props.compData.board_name, jobs: this.props.compData.jobs };
+    this.addJob = this.addJob.bind(this);
+  }
+
+  addJob(data, index) {
+    let newJob;
+    if (index > -1) {
+      newJob = this.state.jobs.slice();
+      newJob[index] = data;
+    } else {
+      newJob = this.state.jobs.concat(data);
+    }
+    
+    axios.put(`http://localhost:3001/boards/${this.props.compData._id}`, 
+      { board_name: this.state.board_name, jobs: newJob }
+    );
+    this.setState({ ...this.state, jobs: newJob });
+  }
+
   render() {
     let icon = '';
 
-    switch (this.props.compData.board_name) {
+    switch (this.state.board_name) {
       case 'Applied':
         icon = <span className={`${classes.board_icon} ${classes.applied}`}>
                  <svg width="16" height="13" viewBox="0 0 16 13">
@@ -42,10 +65,12 @@ class Board extends Component {
 
     const list = [];
 
-    for (let i = 0; i < this.props.compData.jobs.length; i++) {
+    for (let i = 0; i < this.state.jobs.length; i++) {
       list.push(
         <JobApp 
-          compItem={this.props.compData.jobs[i]}
+          compItem={this.state.jobs[i]}
+          compIndex={i}
+          addJob={this.addJob}
           key={i}
         />
       );
@@ -53,16 +78,17 @@ class Board extends Component {
 
     list.push(
       <JobAdd 
-        compItem={this.props.compData.board_name}
+        compItem={this.state.board_name}
         key={list.length}
+        addJob={this.addJob}
       />
     );
 
     return (
-      <div id={this.props.compData.board_name}>
+      <div id={this.state.board_name} >
         <h4 className={`${classes.board_title}`}>
           {icon}
-          {this.props.compData.board_name}
+          {this.state.board_name}
         </h4>
 
         <div className={`${classes.jobs}`}>
