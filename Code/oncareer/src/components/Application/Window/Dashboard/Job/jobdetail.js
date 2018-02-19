@@ -15,7 +15,7 @@ class JobDetail extends Component {
       logo: compItem.logo || '',
       date: compItem.date || '',
       description: compItem.description || '',
-      index: this.props.compIndex || -1
+      index: this.props.compIndex || 0
     };
 
     this.onOverlayClick = this.onOverlayClick.bind(this);

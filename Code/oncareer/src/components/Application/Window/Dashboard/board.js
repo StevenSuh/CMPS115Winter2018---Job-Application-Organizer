@@ -16,9 +16,9 @@ class Board extends Component {
 
   addJob(data, index) {
     let newJob;
-    if (index > -1) {
+    if (index) {
       newJob = this.state.jobs.slice();
-      newJob[index] = data;
+      newJob[index-1] = data;
     } else {
       newJob = this.state.jobs.concat(data);
     }
@@ -69,7 +69,7 @@ class Board extends Component {
       list.push(
         <JobApp 
           compItem={this.state.jobs[i]}
-          compIndex={i}
+          compIndex={i+1}
           addJob={this.addJob}
           key={i}
         />

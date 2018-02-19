@@ -17,8 +17,9 @@
   margin-bottom: 2px;
   transition: background-color 0.1s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
+.job_item:active,
 .job_add:active {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.1) !important;
 }
 
 .job_item:first-child {
@@ -59,7 +60,9 @@
 .job_company {
   font-size: 16px;
   font-weight: 500;
+  max-height: 1.2em;
   margin-bottom: 5px;
+  overflow: hidden;
 }
 
 .job_title {
@@ -77,6 +80,15 @@
   color: #AAA;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .job_detail_overlay {
   position: absolute;
   width: 100vw;
@@ -85,6 +97,7 @@
   left: 0;
   background-color: rgba(0,0,0,0.5);
   z-index: 1;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .job_detail_form {
