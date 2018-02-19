@@ -5,6 +5,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
 var boards = require('./routes/boards');
+var utils = require('./routes/utils');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(function(req, res, next) {
 
 app.use('/users', users);
 app.use('/boards', boards);
+app.use('/api', utils);
 
 app.listen(port, function(){
   console.log(`api running on port ${port}`);

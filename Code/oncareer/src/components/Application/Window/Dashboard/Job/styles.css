@@ -38,7 +38,7 @@
   display: inline-block;
   width: 32px;
   height: 32px;
-  object-fit: cover;
+  object-fit: contain;
   vertical-align: top;
 }
 
@@ -157,7 +157,12 @@
   resize: none;
 }
 
-.job_detail_button {
+.job_detail_input_wrapper input.error {
+  border: 1.5px solid red;
+}
+
+.job_detail_button,
+.job_detail_button_url {
   position: relative;
   outline: none;
   right: calc(-100% + 20px);
@@ -172,6 +177,20 @@
   cursor: pointer;
   margin-bottom: 15px;
 }
-.job_detail_button:active {
+.job_detail_button:active,
+.job_detail_button_url:active {
   background-color: rgba(0,0,0,0.1);
+}
+
+.job_detail_button_url {
+  right: unset;
+  transform: none;
+  float: right;
+}
+
+.job_detail_note {
+  margin: 5px;
+  margin-left: 120px;
+  font-size: 14px;
+  color: #AAA;
 }
