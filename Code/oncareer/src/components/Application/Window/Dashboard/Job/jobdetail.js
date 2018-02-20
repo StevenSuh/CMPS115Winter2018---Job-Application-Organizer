@@ -1,7 +1,11 @@
+/* eslint import/no-webpack-loader-syntax: off */
 import React, { Component } from 'react';
+import Select from 'react-select';
 import JobAddURL from './jobaddURL';
 
+import '!style-loader!css-loader!react-select/dist/react-select.css';
 import classes from './styles.css';
+
 
 // this.props.job_item
 
@@ -11,6 +15,7 @@ class JobDetail extends Component {
 
     const compItem = this.props.compItem || {};
     this.state = { 
+      category: this.props.compBoard,
       title: compItem.title || '',
       company: compItem.company || '',
       logo: compItem.logo || '',
@@ -21,8 +26,10 @@ class JobDetail extends Component {
     };
 
     this.onOverlayClick = this.onOverlayClick.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.onSelectChange = this.onSelectChange.bind(this);
     this.onUrlSwitch = this.onUrlSwitch.bind(this);
   }
 
@@ -32,13 +39,19 @@ class JobDetail extends Component {
     }
   }
 
+  onDeleteClick(event) {
+    event.preventDefault();
+    this.props.deleteJob(this.state.index);
+    this.overlay.click();
+  }
+
   onSaveClick(event) {
     event.preventDefault();
     const form = event.target.parentElement;
 
     let error = false;
     const data = {};
-    for (let i = 0; i < form.length-1; i++) {
+    for (let i = 1; i < form.length-2; i++) {
       if (form[i].value) {
         data[form[i].name] = form[i].value;
         form[i].classList.remove('error');
@@ -51,7 +64,8 @@ class JobDetail extends Component {
       return;
     }
     // add to our current job stack
-    this.props.addJob(data, this.state.index);
+    const category = (this.state.category === this.props.compBoard) ? '' : this.state.category;
+    this.props.addJob(data, this.state.index, category);
 
     // close
     this.overlay.click();
@@ -61,9 +75,14 @@ class JobDetail extends Component {
     this.setState({ ...this.state, [event.target.name]: event.target.value });
   }
 
+  onSelectChange(selectedOption) {
+    this.setState({ ...this.state, category: selectedOption.value });
+  }
+
   onUrlSwitch(result) {
     if (result) {
       this.setState({
+        category: this.state.category,
         title: result.title,
         company: result.company,
         logo: result.logo,
@@ -90,6 +109,11 @@ class JobDetail extends Component {
 
         <form>
           <div className={classes.job_detail_input_wrapper}>
+            <label>Category</label>
+            <Select className={classes.category} options={this.props.options} onChange={this.onSelectChange} value={this.state.category} />
+          </div>
+
+          <div className={classes.job_detail_input_wrapper}>
             <label>Title</label>
             <input name="title" type="text" value={this.state.title} onChange={this.onInputChange} />
           </div>
@@ -114,10 +138,17 @@ class JobDetail extends Component {
             <textarea name="description" rows="5" value={this.state.description} onChange={this.onInputChange} />
           </div>
 
-          <button className={classes.job_detail_button}
+          <button className={classes.job_detail_button_url}
+            style={{ margin: '0 20px 0 10px' }}
             onClick={this.onSaveClick}
           >
             Save
+          </button>
+
+          <button className={`${classes.job_detail_button_url} ${this.state.index ? '' : classes.hide}`}
+            onClick={this.onDeleteClick}
+          > 
+            Delete
           </button>
         </form>
       </div>
@@ -129,7 +160,6 @@ class JobDetail extends Component {
         />
       );
     }
-
     return (
       <div 
         className={`${classes.job_detail_overlay}`}

@@ -12,13 +12,43 @@ class Board extends Component {
 
     this.state = { board_name: this.props.compData.board_name, jobs: this.props.compData.jobs };
     this.addJob = this.addJob.bind(this);
+    this.deleteJob = this.deleteJob.bind(this);
   }
 
-  addJob(data, index) {
+  deleteJob(index) {
+    let newJob = this.state.jobs.slice();
+    index -= 1;
+    newJob.splice(index, 1);
+
+    axios.put(`http://localhost:3001/boards/${this.props.compData._id}`, 
+      { board_name: this.state.board_name, jobs: newJob }
+    );
+    this.props.updateBoard(newJob, this.state.board_name);
+    this.setState({ ...this.state, jobs: newJob });
+  }
+
+  addJob(data, index, category) {
     let newJob;
-    if (index) {
+
+    if (category) {
+      index -= 1;
       newJob = this.state.jobs.slice();
-      newJob[index-1] = data;
+      newJob.splice(index, 1);
+
+      axios.put(`http://localhost:3001/boards/${this.props.compData._id}`, 
+        { board_name: this.state.board_name, jobs: newJob }
+      );
+
+      // needs to transfer category
+      this.props.addToBoard(data, category, newJob, this.state.board_name);
+      this.setState({ ...this.state, jobs: newJob });
+      return;
+    }
+
+    if (index) {
+      index -= 1;
+      newJob = this.state.jobs.slice();
+      newJob[index] = data;
     } else {
       newJob = this.state.jobs.concat(data);
     }
@@ -26,6 +56,7 @@ class Board extends Component {
     axios.put(`http://localhost:3001/boards/${this.props.compData._id}`, 
       { board_name: this.state.board_name, jobs: newJob }
     );
+    this.props.updateBoard(newJob, this.state.board_name);
     this.setState({ ...this.state, jobs: newJob });
   }
 
@@ -69,8 +100,11 @@ class Board extends Component {
       list.push(
         <JobApp 
           compItem={this.state.jobs[i]}
+          compBoard={this.state.board_name}
           compIndex={i+1}
           addJob={this.addJob}
+          deleteJob={this.deleteJob}
+          options={this.props.options}
           key={i}
         />
       );
@@ -78,9 +112,10 @@ class Board extends Component {
 
     list.push(
       <JobAdd 
-        compItem={this.state.board_name}
+        compBoard={this.state.board_name}
         key={list.length}
         addJob={this.addJob}
+        options={this.props.options}
       />
     );
 

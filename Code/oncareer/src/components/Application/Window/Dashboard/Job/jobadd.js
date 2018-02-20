@@ -26,7 +26,9 @@ class JobAdd extends Component {
     if (this.state.showDetail) {
       ReactDOM.render(
         <JobDetail 
+          compBoard={this.props.compBoard}
           compClick={this.onModalClose}
+          options={this.props.options}
           addJob={this.props.addJob}
         />, 
         document.getElementById('modal')

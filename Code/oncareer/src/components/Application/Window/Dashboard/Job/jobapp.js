@@ -27,9 +27,12 @@ class JobApp extends Component {
       ReactDOM.render(
         <JobDetail 
           compItem={this.props.compItem}
+          compBoard={this.props.compBoard}
+          options={this.props.options}
           compIndex={this.props.compIndex}
           compClick={this.onModalClose}
           addJob={this.props.addJob}
+          deleteJob={this.props.deleteJob}
         />, 
         document.getElementById('modal')
       );
