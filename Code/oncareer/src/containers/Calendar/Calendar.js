@@ -23,24 +23,69 @@ class Calendar extends React.Component {
     super();
   }
 
+  addEvent(eventInfo){
+    var startT = new Date(eventInfo.start.toLocaleString());
+    var endT = new Date(eventInfo.end.toLocaleString());
+    var eName = prompt("Enter a title for the event");
+    //var eDesc = prompt("Enter a description for the event.");
+    var newEvent = {
+      title: eName,
+      start: startT,
+      end: endT,
+      //desc: eDesc,
+    };
+    if(eName != ""){
+      this.state.events.push(newEvent);
+      this.setState(this.state.events);
+    }
+  }
+
+
+  resizeEvent = (resizeType, { event, start, end }) => {
+    const { events } = this.state
+    const nextEvents = events.map(existingEvent => {
+      return existingEvent.id == event.id
+        ? { ...existingEvent, start, end }
+        : existingEvent
+      })
+
+    this.setState({
+      events: nextEvents,
+    })
+  }
+
+  moveEvent({ event, start, end }) {
+    const { events } = this.state;
+    const idx = events.indexOf(event)
+    const updatedEvent = { ...event, start, end }
+    const nextEvents = [...events]
+    nextEvents.splice(idx, 1, updatedEvent)
+    this.setState({
+      events: nextEvents,
+    })
+    alert(`${event.title} was dropped onto ${event.start}`)
+  }
+
 
   render () {
     return (
           // React Components in JSX look like HTML tags
           <BigCalendar
             selectable
+            defaultView="week"
             events={this.state.events}
-            step={60}
+            step={30}
             style={{height: '75%',
                     width: '80%'}}
             onSelectSlot={slotInfo =>
               //handle event adding. add to state.
-              alert(
-                `selected slot: \n\nstart ${slotInfo.start.toLocaleString()} ` +
-                `\nend: ${slotInfo.end.toLocaleString()}` +
-                `\naction: ${slotInfo.action}`
-              )
+              this.addEvent(slotInfo)
+              //add to backend
+
             }
+            //onEventDrop={this.moveEvent}
+            //resizable
+            //onEventResize={this.resizeEvent}
           />
         )
   }
