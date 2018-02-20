@@ -31,11 +31,10 @@ router.get('/acc/:id', function(req, res, next){
 
 /* SAVE BOARD */
 router.post('/', function(req, res, next) {
-  console.log(req.body);
-  // Boards.create(req.body, function(err, post){
-    // if(err) return next(err);
-    // res.json(post);
-  // })
+  Boards.create(req.body, function(err, post){
+    if(err) return next(err);
+    res.json(post);
+  })
 })
 
 /* UPDATE BOARD */

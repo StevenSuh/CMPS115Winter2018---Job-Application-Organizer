@@ -1,116 +1,81 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Board from './board';
+import BoardAdd from './boardadd';
 
 import classes from './styles.css';
+import Auth from '../../../Login/Auth';
+
+const url = 'http://localhost:3001/';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { boards: [] };
+    this.state = { boards: [], options: [] };
+
+    this.updateBoard = this.updateBoard.bind(this);
+    this.addToBoard = this.addToBoard.bind(this);
   }
 
   componentDidMount() {
     // this is where axios call should occur to update
     // boards by pushing a JSX element of boards
+    axios.get(url + 'boards/acc/' + Auth.getId())
+      .then(res => {
+        res.data.sort(function(a,b) { return a.index - b.index; });
 
-    // for now ill just push temp objects
-    const temp = [
-      {
-        board_name: 'Applied',
-        jobs: [
-          {
-            title: 'Software Engineering Intern',
-            company: 'Google',
-            date: '1/5/2018',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAALTAAAAJGY1NGY1N2ZhLTNmZmUtNGRmZi1iMDgxLTJjZjdkNjNkYmZlOQ.png',
-            description: ''
-          },
-          {
-            title: 'Software Engineer Intern/Co-op',
-            company: 'Facebook',
-            date: '1/3/2018',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAYRAAAAJDVlMzBlYjNiLTAxN2QtNGQxZC1iZTAzLTlmNWQ1OTE4OGY4ZA.png',
-            description: ''
-          },
-          {
-            title: '2018 Summer Internship - Software Development Engineer',
-            company: 'Amazon',
-            date: '1/2/2018',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAA0ZAAAAJDk1ZjA0ZTJmLWQwYWQtNDEwNS04M2QxLTIwM2UxMTE0NTBkMw.png',
-            description: ''
-          },
-          {
-            title: 'Software Engineer Internship',
-            company: 'Microsoft',
-            date: '12/27/2017',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAAjfAAAAJGMyYmExNThhLTNlYmMtNDAzYi05MmNmLWFmOTY1NDcyMTFjMA.png',
-            description: ''
-          },
-          {
-            title: '2018 University Application | Full-Time & Internship',
-            company: 'Twitter',
-            date: '12/27/2017',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAATdAAAAJGVhNWFjN2Q5LTYzNjYtNDU4YS04ZjcwLWEyMTNhZDA5NTgxNQ.png',
-            description: ''
-          }
-        ]
-      },
-      {
-        board_name: 'Interview',
-        jobs: [
-          {
-            title: '2018 University Application | Full-Time & Internship',
-            company: 'Twitter',
-            date: '12/27/2017',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAATdAAAAJGVhNWFjN2Q5LTYzNjYtNDU4YS04ZjcwLWEyMTNhZDA5NTgxNQ.png'
-          }
-        ]
-      },
-      {
-        board_name: 'Offer',
-        jobs: [
-          {
-            title: '2018 University Application | Full-Time & Internship',
-            company: 'Twitter',
-            date: '12/27/2017',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAATdAAAAJGVhNWFjN2Q5LTYzNjYtNDU4YS04ZjcwLWEyMTNhZDA5NTgxNQ.png'
-          }
-        ]
-      },
-      {
-        board_name: 'Interested',
-        jobs: [
-          {
-            title: '2018 University Application | Full-Time & Internship',
-            company: 'Twitter',
-            date: '12/27/2017',
-            logo: 'https://media-exp2.licdn.com/mpr/mpr/shrink_200_200/AAEAAQAAAAAAAATdAAAAJGVhNWFjN2Q5LTYzNjYtNDU4YS04ZjcwLWEyMTNhZDA5NTgxNQ.png'
-          }
-        ]
-      },
-      {
-        board_name: 'New List',
-        jobs: [
-        ]
-      }
-    ];
-    const actual = [];
+        const options = [];
+        res.data.forEach((element) => options.push({value: element.board_name, label: element.board_name}));
+        this.setState({ boards: res.data, options: options });
+      });
+  }
 
-    for (let i = 0; i < temp.length; i++) {
-      actual.push(
-        <Board 
-          compData={temp[i]}
-          key={i}
-        />
-      );
-    }
-    this.setState({ boards: this.state.boards.concat(actual) });
+  updateBoard(data_list, board_name) {
+    const tempState = { ...this.state };
+    const target = tempState.boards.find(el => {
+      return el.board_name === board_name;
+    });
+    target.jobs = data_list;
+    this.setState(tempState);
+  }
+
+  addToBoard(new_data, new_board_name, old_data_list, old_board_name) {
+    const tempState = { ...this.state };
+    const target = tempState.boards.find((el) => {
+      return el.board_name === new_board_name;
+    });
+    target.jobs.push(new_data);
+
+    console.log(target);
+
+    const oldTarget = tempState.boards.find(el => {
+      return el.board_name === old_board_name;
+    });
+    oldTarget.jobs = old_data_list;    
+
+    axios.put(`http://localhost:3001/boards/${target._id}`, 
+      { board_name: target.board_name, jobs: target.jobs }
+    ).then(res => {
+      this.setState(tempState);
+    });
   }
 
   render() {
-    console.log('compUser:', this.props.compUser);
+    const actual = [];
+    for (let i = 0; i < this.state.boards.length; i++) {
+      actual.push(
+        <Board
+          compData={this.state.boards[i]}
+          key={i}
+          options={this.state.options}
+          addToBoard={this.addToBoard}
+          updateBoard={this.updateBoard}
+        />
+      );
+    }
+
     return (
       <div className={`${classes.dashboard}`}>
         <h2 className={`${classes.title}`}>
@@ -120,7 +85,8 @@ class Dashboard extends Component {
         </h2>
 
         <div className={`${classes.boards}`}>
-          {this.state.boards}
+          {actual}
+          <BoardAdd />
         </div>
       </div>
     );

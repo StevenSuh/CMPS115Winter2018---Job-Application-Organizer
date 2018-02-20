@@ -50,8 +50,6 @@ class Login extends React.Component {
     if(Auth.isUserAuthenticated()) {
       // already logged in
       console.log("User is logged in");
-
-
     }else{
       if(data.length == 0){
         axios.post(this.state.url + 'users/', user)
@@ -63,10 +61,10 @@ class Login extends React.Component {
           })
         
         const initBoard = [
-          { board_name: 'Applied', jobs: [], user_id: user.user_id }, 
-          { board_name: 'Interview', jobs: [], user_id: user.user_id }, 
-          { board_name: 'Offer', jobs: [], user_id: user.user_id }, 
-          { board_name: 'Interested', jobs: [], user_id: user.user_id }
+          { board_name: 'Applied', jobs: [], user_id: user.user_id, index: 0 }, 
+          { board_name: 'Interview', jobs: [], user_id: user.user_id, index: 1 }, 
+          { board_name: 'Offer', jobs: [], user_id: user.user_id, index: 2 }, 
+          { board_name: 'Interested', jobs: [], user_id: user.user_id, index: 3 }
         ];
         for (let i = 0; i < initBoard.length; i++) {
           axios.post(this.state.url + 'boards/', initBoard[i]);
@@ -74,15 +72,29 @@ class Login extends React.Component {
       }
       else{
         console.log("Old user")
-        console.log(data, user)
+        console.log(data, user);
+        axios.get(this.state.url + 'boards/acc/' + user.user_id)
+          .then(res => {
+            if (!res.data[0]) {
+              const initBoard = [
+                { board_name: 'Applied', jobs: [], user_id: user.user_id }, 
+                { board_name: 'Interview', jobs: [], user_id: user.user_id }, 
+                { board_name: 'Offer', jobs: [], user_id: user.user_id }, 
+                { board_name: 'Interested', jobs: [], user_id: user.user_id }
+              ];
+              for (let i = 0; i < initBoard.length; i++) {
+                axios.post(this.state.url + 'boards/', initBoard[i]);
+              }
+            }
+          });
       }
-      Auth.authenticateUser(user.user_id)
+      Auth.authenticateUser(user.user_id);
 
       // Login successful!
       // loading? confirmation message?
 
       // redirect to app
-      this.props.history.push('/app');
+      // this.props.history.push('/app');
     }
   }
 
