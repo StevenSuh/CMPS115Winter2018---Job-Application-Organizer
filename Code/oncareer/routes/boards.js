@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-var User = require('../models/boards')
+var Boards = require('../models/boards')
 
 /* GET ALL BOARDS */
 router.get('/', function(req, res, next){
