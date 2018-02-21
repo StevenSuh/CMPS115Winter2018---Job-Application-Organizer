@@ -40,6 +40,9 @@ class Calendar extends React.Component {
     }
   }
 
+  deleteEvent(eventInfo){
+
+  }
 
   resizeEvent = (resizeType, { event, start, end }) => {
     const { events } = this.state
@@ -82,6 +85,9 @@ class Calendar extends React.Component {
               this.addEvent(slotInfo)
               //add to backend
 
+            }
+            onSelectEvent={eventInfo =>
+              console.log("This is an event. Add a popup for editing and deleting pleases")
             }
             //onEventDrop={this.moveEvent}
             //resizable

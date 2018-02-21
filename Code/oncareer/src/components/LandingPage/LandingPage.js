@@ -27,13 +27,6 @@ class LandingPage extends React.Component {
             </h2>
 
             <nav className={classes.navigation}>
-              <button className={classes.nav_button}>
-                About
-              </button>
-
-              <button className={classes.nav_button}>
-                Sign In
-              </button>
             </nav>
           </header>
 
