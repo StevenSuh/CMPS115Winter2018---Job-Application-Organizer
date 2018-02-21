@@ -11,9 +11,9 @@ class Application extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
-      view: 'dashboard', 
-      url: 'http://localhost:3001' 
+    this.state = {
+      view: 'dashboard',
+      url: 'https://calm-springs-95813.herokuapp.com/' 
     };
 
     this.updateView = this.updateView.bind(this);

@@ -7,7 +7,7 @@ import BoardAdd from './boardadd';
 import classes from './styles.css';
 import Auth from '../../../Login/Auth';
 
-const url = 'http://localhost:3001/';
+const url = 'https://calm-springs-95813.herokuapp.com/';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -53,9 +53,9 @@ class Dashboard extends Component {
     const oldTarget = tempState.boards.find(el => {
       return el.board_name === old_board_name;
     });
-    oldTarget.jobs = old_data_list;    
+    oldTarget.jobs = old_data_list;
 
-    axios.put(`http://localhost:3001/boards/${target._id}`, 
+    axios.put(`http://localhost:3001/boards/${target._id}`,
       { board_name: target.board_name, jobs: target.jobs }
     ).then(res => {
       this.setState(tempState);
@@ -79,8 +79,8 @@ class Dashboard extends Component {
     return (
       <div className={`${classes.dashboard}`}>
         <h2 className={`${classes.title}`}>
-          {this.props.compUser.user_name ? 
-            this.props.compUser.user_name + "'s Career Dashboard" : 
+          {this.props.compUser.user_name ?
+            this.props.compUser.user_name + "'s Career Dashboard" :
             ''}
         </h2>
 
