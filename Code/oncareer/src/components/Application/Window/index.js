@@ -8,7 +8,7 @@ import axios from 'axios';
 import Auth from '../../Login/Auth';
 import Calendar from '../../../containers/Calendar/Calendar';
 
-const url = "http://localhost:3001/users/acc/";
+const url = "https://calm-springs-95813.herokuapp.com/users/acc/";
 
 class Window extends Component {
   constructor(props) {
