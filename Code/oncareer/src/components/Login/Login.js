@@ -15,7 +15,7 @@ class Login extends React.Component {
       name: "",
       email: "",
       newUser: true,
-      url: "http://localhost:3001/",
+      url: "https://calm-springs-95813.herokuapp.com/",
       data: [],
       mounted: false
     }
@@ -59,11 +59,11 @@ class Login extends React.Component {
           .catch(err => {
             console.log(err)
           })
-        
+
         const initBoard = [
-          { board_name: 'Applied', jobs: [], user_id: user.user_id, index: 0 }, 
-          { board_name: 'Interview', jobs: [], user_id: user.user_id, index: 1 }, 
-          { board_name: 'Offer', jobs: [], user_id: user.user_id, index: 2 }, 
+          { board_name: 'Applied', jobs: [], user_id: user.user_id, index: 0 },
+          { board_name: 'Interview', jobs: [], user_id: user.user_id, index: 1 },
+          { board_name: 'Offer', jobs: [], user_id: user.user_id, index: 2 },
           { board_name: 'Interested', jobs: [], user_id: user.user_id, index: 3 }
         ];
         for (let i = 0; i < initBoard.length; i++) {
@@ -77,9 +77,9 @@ class Login extends React.Component {
           .then(res => {
             if (!res.data[0]) {
               const initBoard = [
-                { board_name: 'Applied', jobs: [], user_id: user.user_id }, 
-                { board_name: 'Interview', jobs: [], user_id: user.user_id }, 
-                { board_name: 'Offer', jobs: [], user_id: user.user_id }, 
+                { board_name: 'Applied', jobs: [], user_id: user.user_id },
+                { board_name: 'Interview', jobs: [], user_id: user.user_id },
+                { board_name: 'Offer', jobs: [], user_id: user.user_id },
                 { board_name: 'Interested', jobs: [], user_id: user.user_id }
               ];
               for (let i = 0; i < initBoard.length; i++) {
@@ -119,8 +119,8 @@ class Login extends React.Component {
     console.log(Authenticated)
     return (
       <div>
-        <GoogleSignIn 
-          getUser={this.getUser} 
+        <GoogleSignIn
+          getUser={this.getUser}
           logOut={this.logOut}
         />
       </div>

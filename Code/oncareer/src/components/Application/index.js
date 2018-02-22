@@ -14,10 +14,16 @@ class Application extends Component {
   constructor(props) {
     super(props);
 
+<<<<<<< HEAD
     this.state = { 
       view: 'dashboard', 
       url: 'http://localhost:3001',
       user: ''
+=======
+    this.state = {
+      view: 'dashboard',
+      url: 'https://calm-springs-95813.herokuapp.com/' 
+>>>>>>> upstream/master
     };
 
     this.updateView = this.updateView.bind(this);

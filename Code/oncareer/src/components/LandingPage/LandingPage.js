@@ -10,7 +10,7 @@ class LandingPage extends React.Component {
     constructor(props){
       super(props)
       this.state = {
-        url: "http://localhost:3001/users/"
+        url: "https://calm-springs-95813.herokuapp.com/users"
       }
     }
 
@@ -31,7 +31,7 @@ class LandingPage extends React.Component {
           </header>
 
           <p className={classes.description}>
-            Organize and keep track of your job applications in 
+            Organize and keep track of your job applications in
             <br/>
             an efficient manner
           </p>
@@ -39,7 +39,7 @@ class LandingPage extends React.Component {
           <SignIn />
 
           <img className={classes.heroimage} src={screenshot} alt="screenshot" />
-          
+
           <div className={classes.about}>
             <h3 className={classes.about_title}>
               About
