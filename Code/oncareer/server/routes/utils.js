@@ -45,6 +45,13 @@ function parseIndeed(body) {
   point = body.lastIndexOf('src="', point)+5;
   output.logo = body.substring(point, body.indexOf('"', point));
 
+  if (!output.logo.includes('http')) {
+    point = body.indexOf('og:image');
+    point = body.indexOf('content="', point)+9;
+    output.logo = body.substring(point, body.indexOf('"', point));
+  }
+
+
   // date
   let d = new Date(),
     month = '' + (d.getMonth() + 1),

@@ -8,22 +8,15 @@ import SignIn from '../Login/Login';
 
 import Auth from '../Login/Auth';
 
-const url = "http://localhost:3001/users/acc/";
+import url from '../../url';
 
 class Application extends Component {
   constructor(props) {
     super(props);
 
-<<<<<<< HEAD
-    this.state = { 
-      view: 'dashboard', 
-      url: 'http://localhost:3001',
-      user: ''
-=======
     this.state = {
       view: 'dashboard',
-      url: 'https://calm-springs-95813.herokuapp.com/' 
->>>>>>> upstream/master
+      user: ''
     };
 
     this.updateView = this.updateView.bind(this);
@@ -34,7 +27,7 @@ class Application extends Component {
       this.props.history.push('/');
     }
 
-    const requestURL = url + Auth.getId();
+    const requestURL = url + 'users/acc/' + Auth.getId();
     axios.get(requestURL)
       .then(res => {
         this.setState({ ...this.state, user: res.data[0] });

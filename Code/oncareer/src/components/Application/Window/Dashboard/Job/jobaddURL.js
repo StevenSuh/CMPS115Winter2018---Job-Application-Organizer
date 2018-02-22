@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import classes from './styles.css';
 
+import url from '../../../../../url';
+
 // this.props.job_item
 
 class JobAddURL extends Component {
@@ -28,7 +30,7 @@ class JobAddURL extends Component {
   async onNextClick(event) {
     event.preventDefault();
     if (this.state.url) {
-      const result = await axios.get(`http://localhost:3001/api/parsing?url=${this.state.url}`);
+      const result = await axios.get(`${url}api/parsing?url=${this.state.url}`);
 
       this.props.showDetail(result.data);
     } else {

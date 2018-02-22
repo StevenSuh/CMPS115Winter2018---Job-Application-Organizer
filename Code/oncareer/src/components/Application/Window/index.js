@@ -6,16 +6,11 @@ import classes from './styles.css';
 
 import Calendar from '../../../containers/Calendar/Calendar';
 
-<<<<<<< HEAD
-=======
-const url = "https://calm-springs-95813.herokuapp.com/users/acc/";
-
->>>>>>> upstream/master
 class Window extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     let view = <div></div>;
 

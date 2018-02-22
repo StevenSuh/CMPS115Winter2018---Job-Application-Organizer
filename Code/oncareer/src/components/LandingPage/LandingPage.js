@@ -10,7 +10,6 @@ class LandingPage extends React.Component {
     constructor(props){
       super(props)
       this.state = {
-        url: "https://calm-springs-95813.herokuapp.com/users"
       }
     }
 

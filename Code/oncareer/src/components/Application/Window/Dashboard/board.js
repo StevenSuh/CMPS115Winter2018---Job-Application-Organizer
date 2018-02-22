@@ -6,6 +6,8 @@ import JobAdd from './Job/jobadd';
 
 import classes from './styles.css';
 
+import url from '../../../../url';
+
 class Board extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +22,7 @@ class Board extends Component {
     index -= 1;
     newJob.splice(index, 1);
 
-    axios.put(`https://calm-springs-95813.herokuapp.com/boards/${this.props.compData._id}`, 
+    axios.put(`${url}boards/${this.props.compData._id}`, 
       { board_name: this.state.board_name, jobs: newJob }
     );
     this.props.updateBoard(newJob, this.state.board_name);
@@ -35,7 +37,7 @@ class Board extends Component {
       newJob = this.state.jobs.slice();
       newJob.splice(index, 1);
 
-      axios.put(`http://localhost:3001/boards/${this.props.compData._id}`,
+      axios.put(`${url}boards/${this.props.compData._id}`,
         { board_name: this.state.board_name, jobs: newJob }
       );
 
@@ -53,7 +55,7 @@ class Board extends Component {
       newJob = this.state.jobs.concat(data);
     }
 
-    axios.put(`http://localhost:3001/boards/${this.props.compData._id}`,
+    axios.put(`${url}boards/${this.props.compData._id}`,
       { board_name: this.state.board_name, jobs: newJob }
     );
     this.props.updateBoard(newJob, this.state.board_name);

@@ -7,7 +7,7 @@ import BoardAdd from './boardadd';
 import classes from './styles.css';
 import Auth from '../../../Login/Auth';
 
-const url = 'https://calm-springs-95813.herokuapp.com/';
+import url from '../../../../url';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Dashboard extends Component {
   componentDidMount() {
     // this is where axios call should occur to update
     // boards by pushing a JSX element of boards
-    axios.get(url + 'boards/acc/' + Auth.getId())
+    axios.get(`${url}boards/acc/${Auth.getId()}`)
       .then(res => {
         res.data.sort(function(a,b) { return a.index - b.index; });
 
@@ -55,7 +55,7 @@ class Dashboard extends Component {
     });
     oldTarget.jobs = old_data_list;
 
-    axios.put(`http://localhost:3001/boards/${target._id}`,
+    axios.put(`${url}boards/${target._id}`,
       { board_name: target.board_name, jobs: target.jobs }
     ).then(res => {
       this.setState(tempState);
