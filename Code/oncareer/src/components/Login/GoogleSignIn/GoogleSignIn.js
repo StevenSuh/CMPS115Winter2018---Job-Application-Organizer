@@ -25,7 +25,7 @@ class GoogleSignIn extends React.Component {
       console.log('GoogleSignIn mounted')
       Auth.storeGapi(gapi);
       gapi.signin2.render('my-signin2', {
-          'scope': 'profile email',
+          'scope': 'profile email https://www.googleapis.com/auth/calendar',
           'width': 230,
           'height': 50,
           'longtitle': true,

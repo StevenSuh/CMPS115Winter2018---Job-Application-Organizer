@@ -139,7 +139,7 @@ class JobDetail extends Component {
           </div>
 
           <button className={classes.job_detail_button_url}
-            style={{ margin: '0 20px 0 10px' }}
+            style={{ margin: '0 20px 15px 10px' }}
             onClick={this.onSaveClick}
           >
             Save

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import obj from './GoogleSignIn/GoogleSignIn';
-import Auth from './Auth'
+import Auth from './Auth';
+import url from '../../url';
 var GoogleSignIn = obj.GoogleSignIn
 
 class Login extends React.Component {
@@ -15,7 +16,7 @@ class Login extends React.Component {
       name: "",
       email: "",
       newUser: true,
-      url: "https://calm-springs-95813.herokuapp.com/",
+      url: url,
       data: [],
       mounted: false
     }

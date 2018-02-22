@@ -4,39 +4,25 @@ import Dashboard from './Dashboard';
 
 import classes from './styles.css';
 
-import axios from 'axios';
-import Auth from '../../Login/Auth';
 import Calendar from '../../../containers/Calendar/Calendar';
-
-const url = "https://calm-springs-95813.herokuapp.com/users/acc/";
 
 class Window extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { user: '' };
-  }
-
-  componentDidMount() {
-    const requestURL = url + Auth.getId();
-    axios.get(requestURL)
-      .then(res => {
-        this.setState({ ...this.state, user: res.data[0] });
-    });
   }
 
   render() {
     let view = <div></div>;
 
-    if (this.state.user) {
+    if (this.props.compUser) {
       switch (this.props.compView) {
         case 'profile':
           break;
         case 'dashboard':
-          view = <Dashboard compUser={this.state.user} />
+          view = <Dashboard compUser={this.props.compUser} />
           break;
         case 'calendar':
-          view = <Calendar />
+          view = <Calendar compUser={this.props.compUser} />
           break;
         case 'analytics':
           break;

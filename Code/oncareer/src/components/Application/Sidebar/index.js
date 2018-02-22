@@ -32,10 +32,9 @@ class Sidebar extends Component {
           <button
             className={`${classes.button}`}
             data-class="profile"
-            onClick={this.onButtonClick}
           >
             <div className={`${classes.profile}`}>
-              J
+              {this.props.compUser.user_name ? this.props.compUser.user_name.slice(0,1) : ''}
             </div>
           </button>
 

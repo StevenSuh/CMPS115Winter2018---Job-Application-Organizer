@@ -1,76 +1,202 @@
+/* global gapi */
 /* eslint import/no-webpack-loader-syntax: off */
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 //import './Calendar.css';
 //import 'react-big-calendar/lib/css/react-big-calendar.css';
 
+import EventDetail from './eventDetail';
+
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
+
+// google timestamp pattern:
+// moment(time).utc().format();
+
+// react-big-calendar timestamp pattern:
+// new Date(time)
 
 require('./Calendar.css');
 BigCalendar.momentLocalizer(moment);
 
 
 class Calendar extends React.Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-      events: []
-      }
+    this.state = {
+      events: [],
+      calendars: [],
+      showDetail: false,
+      currEvent: -1
+    }
 
-  constructor () {
-    super();
+    this.renderDetail = this.renderDetail.bind(this);
+    this.addEvent = this.addEvent.bind(this);
+    this.updateEvent = this.updateEvent.bind(this);
+    this.deleteEvent = this.deleteEvent.bind(this);
+    this.cancelPopUp = this.cancelPopUp.bind(this);
+    this.onViewChange = this.onViewChange.bind(this);
+    this.onEventClick = this.onEventClick.bind(this);
+  }
+
+  componentDidMount() {
+    gapi.client.load('calendar', 'v3', () => {
+      // connected
+      console.log('gapi calendar connected!!!');
+
+      this.onViewChange('week');
+    });
+  }
+
+  cancelPopUp() {
+    this.setState({ ...this.state, showDetail: false });
   }
 
   addEvent(eventInfo){
-    var startT = new Date(eventInfo.start.toLocaleString());
-    var endT = new Date(eventInfo.end.toLocaleString());
-    var eName = prompt("Enter a title for the event");
-    //var eDesc = prompt("Enter a description for the event.");
-    var newEvent = {
-      title: eName,
-      start: startT,
-      end: endT,
-      //desc: eDesc,
-    };
-    if(eName != ""){
-      this.state.events.push(newEvent);
-      this.setState(this.state.events);
+    var startT = new Date(eventInfo.start);
+    var endT = new Date(eventInfo.end);
+
+    if (startT.toString() === endT.toString()) {
+      endT = endT.setDate(endT.getDate() + 1);
     }
+    const googleEvent = {
+      start: {
+        dateTime: moment(startT).utc().format()
+      },
+      end: { 
+        dateTime: moment(endT).utc().format()
+      }
+    }
+
+    const itemRequest = gapi.client.calendar.events.insert({
+      calendarId: this.props.compUser.user_email
+    }, googleEvent);
+
+    itemRequest.execute(data => {
+      console.log(data);
+      var newEvent = {
+        title: '',
+        start: startT,
+        end: endT,
+        description: '',
+        index: this.state.events.length,
+        g_id: data.id
+      };
+      const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
+      newState.events.push(newEvent);
+
+      this.setState(newState);
+    });
   }
 
-  deleteEvent(eventInfo){
+  deleteEvent(){
+    const newState = { ...this.state, currEvent: -1, showDetail: false };
+    const deleted = newState.events.splice(this.state.currEvent, 1);
+    console.log('deleted:', deleted);
+    const itemRequest = gapi.client.calendar.events.delete({
+      calendarId: this.props.compUser.user_email,
+      eventId: deleted[0].g_id
+    });
 
+    itemRequest.execute(() => {
+      this.setState(newState);
+    });
   }
 
-  resizeEvent = (resizeType, { event, start, end }) => {
-    const { events } = this.state
-    const nextEvents = events.map(existingEvent => {
-      return existingEvent.id == event.id
-        ? { ...existingEvent, start, end }
-        : existingEvent
-      })
+  updateEvent(data) {
+    const newState = { ...this.state, showDetail: false };
+    newState.events[newState.currEvent] = data;
+    
+    const googleEvent = {
+      summary: data.title,
+      start: {
+        dateTime: moment(data.start).utc().format()
+      },
+      end: { 
+        dateTime: moment(data.end).utc().format()
+      },
+      description: data.description
+    }
 
-    this.setState({
-      events: nextEvents,
-    })
+    const itemRequest = gapi.client.calendar.events.update({
+      calendarId: this.props.compUser.user_email,
+      eventId: data.g_id
+    }, googleEvent);
+
+    itemRequest.execute(data => {
+      console.log('Updated event!');
+      this.setState(newState);
+    });
   }
 
-  moveEvent({ event, start, end }) {
-    const { events } = this.state;
-    const idx = events.indexOf(event)
-    const updatedEvent = { ...event, start, end }
-    const nextEvents = [...events]
-    nextEvents.splice(idx, 1, updatedEvent)
-    this.setState({
-      events: nextEvents,
-    })
-    alert(`${event.title} was dropped onto ${event.start}`)
+  onViewChange(view) {
+    const d = new Date();
+    let timeMinimum, timeMaximum;
+
+    switch (view) {
+      case 'month':
+        timeMinimum = moment(new Date(d.getFullYear(), d.getMonth(), 1)).utc().format();
+        timeMaximum = moment(new Date(d.getFullYear(), d.getMonth()+1, 0)).utc().format();
+        break;
+      default: 
+        timeMinimum = moment(d.setDate(d.getDate() - d.getDay())).utc().format();
+        timeMaximum = moment(d.setDate(d.getDate() + 7)).utc().format();
+        break;
+    }
+
+    const itemRequest = gapi.client.calendar.events.list({
+      calendarId: this.props.compUser.user_email,
+      timeMin: timeMinimum,
+      timeMax: timeMaximum
+    });
+    itemRequest.execute(({ items }) => {
+      const eventData = [];
+      console.log(items);
+      for (let i = 0; i < items.length; i++) {
+        const startT = items[i].start.dateTime || items[i].start.date;
+        const endT = items[i].end.dateTime || items[i].end.date;
+
+        eventData.push({
+          title: items[i].summary,
+          start: new Date(startT),
+          end: new Date(endT),
+          description: items[i].description,
+          index: i,
+          g_id: items[i].id
+        });
+      }
+      this.setState({ ...this.state, events: eventData });
+    });
   }
 
+  onEventClick(eventInfo) {
+    console.log(eventInfo);
+    this.setState({ ...this.state, currEvent: eventInfo.index, showDetail: true });
+  }
 
-  render () {
+  renderDetail() {
+    if (this.state.showDetail) {
+      ReactDOM.render(
+        <EventDetail 
+          compEvent={this.state.events[this.state.currEvent]}
+          compUpdate={this.updateEvent}
+          compDelete={this.deleteEvent}
+          compClick={this.cancelPopUp}
+        />, 
+        document.getElementById('modal')
+      );
+    } else {
+      ReactDOM.render(null, document.getElementById('modal'));
+    }    
+  }
+
+  render() {
+    console.log(this.state.events);
+    this.renderDetail();
     return (
           // React Components in JSX look like HTML tags
           <BigCalendar
@@ -80,15 +206,9 @@ class Calendar extends React.Component {
             step={30}
             style={{height: '75%',
                     width: '80%'}}
-            onSelectSlot={slotInfo =>
-              //handle event adding. add to state.
-              this.addEvent(slotInfo)
-              //add to backend
-
-            }
-            onSelectEvent={eventInfo =>
-              console.log("This is an event. Add a popup for editing and deleting pleases")
-            }
+            onSelectSlot={this.addEvent}
+            onSelectEvent={this.onEventClick}
+            onView={this.onViewChange}
             //onEventDrop={this.moveEvent}
             //resizable
             //onEventResize={this.resizeEvent}

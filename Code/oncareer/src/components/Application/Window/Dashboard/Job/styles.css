@@ -1,3 +1,7 @@
+.hide {
+  display: none;
+}
+
 .job_item,
 .job_add {
   position: relative;
