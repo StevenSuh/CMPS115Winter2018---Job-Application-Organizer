@@ -48,7 +48,7 @@ class Calendar extends React.Component {
       // connected
       console.log('gapi calendar connected!!!');
 
-      this.onViewChange('week');
+      this.onViewChange();
     });
   }
 
@@ -133,41 +133,28 @@ class Calendar extends React.Component {
     });
   }
 
-  onViewChange(view) {
+  onViewChange() {
     const d = new Date();
-    let timeMinimum, timeMaximum;
-
-    switch (view) {
-      case 'month':
-        timeMinimum = moment(new Date(d.getFullYear(), d.getMonth(), 1)).utc().format();
-        timeMaximum = moment(new Date(d.getFullYear(), d.getMonth()+1, 0)).utc().format();
-        break;
-      default: 
-        timeMinimum = moment(d.setDate(d.getDate() - d.getDay())).utc().format();
-        timeMaximum = moment(d.setDate(d.getDate() + 7)).utc().format();
-        break;
-    }
 
     const itemRequest = gapi.client.calendar.events.list({
-      calendarId: this.props.compUser.user_email,
-      timeMin: timeMinimum,
-      timeMax: timeMaximum
+      calendarId: this.props.compUser.user_email
     });
     itemRequest.execute(({ items }) => {
       const eventData = [];
-      console.log(items);
       for (let i = 0; i < items.length; i++) {
-        const startT = items[i].start.dateTime || items[i].start.date;
-        const endT = items[i].end.dateTime || items[i].end.date;
+        if (items[i].start) {
+          const startT = items[i].start.dateTime || items[i].start.date;
+          const endT = items[i].end.dateTime || items[i].end.date;
 
-        eventData.push({
-          title: items[i].summary,
-          start: new Date(startT),
-          end: new Date(endT),
-          description: items[i].description,
-          index: i,
-          g_id: items[i].id
-        });
+          eventData.push({
+            title: items[i].summary,
+            start: new Date(startT),
+            end: new Date(endT),
+            description: items[i].description,
+            index: i,
+            g_id: items[i].id
+          });
+        }
       }
       this.setState({ ...this.state, events: eventData });
     });
@@ -208,7 +195,6 @@ class Calendar extends React.Component {
                     width: '80%'}}
             onSelectSlot={this.addEvent}
             onSelectEvent={this.onEventClick}
-            onView={this.onViewChange}
             //onEventDrop={this.moveEvent}
             //resizable
             //onEventResize={this.resizeEvent}
