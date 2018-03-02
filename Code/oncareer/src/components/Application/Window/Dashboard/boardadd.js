@@ -10,7 +10,8 @@ class BoardAdd extends Component {
           Add New Board
         </h4>
 
-        <div className={`${classes.board_add_button}`}>
+        <div className={`${classes.board_add_button}`}
+              onClick={this.props.onClick}>
           +
         </div>
       </div>

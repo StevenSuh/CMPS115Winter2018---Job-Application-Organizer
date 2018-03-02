@@ -17,6 +17,7 @@ class Dashboard extends Component {
 
     this.updateBoard = this.updateBoard.bind(this);
     this.addToBoard = this.addToBoard.bind(this);
+    this.addNewBoard = this.addNewBoard.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +63,21 @@ class Dashboard extends Component {
     });
   }
 
+  addNewBoard(){
+    console.log("hi")
+    console.log(this.state.boards);
+    var name = prompt("Enter a name for the board.");
+    var newBoard = {
+      board_name: name, jobs: [], user_id: this.props.compUser.user_id, index: this.state.boards.length }
+
+    this.state.boards.push(newBoard);
+
+    axios.post(`${url}boards/`, newBoard);
+    this.setState({board: this.state.boards});
+
+
+  }
+
   render() {
     const actual = [];
     for (let i = 0; i < this.state.boards.length; i++) {
@@ -86,7 +102,7 @@ class Dashboard extends Component {
 
         <div className={`${classes.boards}`}>
           {actual}
-          <BoardAdd />
+          <BoardAdd onClick={this.addNewBoard}/>
         </div>
       </div>
     );
