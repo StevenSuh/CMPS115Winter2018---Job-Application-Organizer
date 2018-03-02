@@ -44,9 +44,10 @@ class Dashboard extends Component {
   }
 
   removeBoard(index){
-    axios.delete(`${url}boards/${this.state.boards[index]._id}`);
+    const id = this.state.boards[index]._id;
+    axios.delete(`${url}boards/${id}`);
     this.state.boards[index] = null;
-    this.setState({board: this.state.boards});
+    this.setState({ ...this.state, board: this.state.boards });
 
     console.log(this.state.boards);
   }
@@ -82,9 +83,7 @@ class Dashboard extends Component {
     this.state.boards.push(newBoard);
 
     axios.post(`${url}boards/`, newBoard);
-    this.setState({board: this.state.boards});
-
-
+    this.setState({ ...this.state, board: this.state.boards });
   }
 
   render() {

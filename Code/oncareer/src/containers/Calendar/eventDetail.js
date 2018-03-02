@@ -9,6 +9,7 @@ class EventDetail extends Component {
 
     const compEvent = this.props.compEvent;
 
+    console.log(this);
     this.state = {
       title: compEvent.title || '',
       start: moment(compEvent.start || '').format('YYYY-MM-DDTHH:mm'),
