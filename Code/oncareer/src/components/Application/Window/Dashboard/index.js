@@ -18,6 +18,7 @@ class Dashboard extends Component {
     this.updateBoard = this.updateBoard.bind(this);
     this.addToBoard = this.addToBoard.bind(this);
     this.addNewBoard = this.addNewBoard.bind(this);
+    this.removeBoard = this.removeBoard.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +41,14 @@ class Dashboard extends Component {
     });
     target.jobs = data_list;
     this.setState(tempState);
+  }
+
+  removeBoard(index){
+    axios.delete(`${url}boards/${this.state.boards[index]._id}`);
+    this.state.boards[index] = null;
+    this.setState({board: this.state.boards});
+
+    console.log(this.state.boards);
   }
 
   addToBoard(new_data, new_board_name, old_data_list, old_board_name) {
@@ -81,16 +90,20 @@ class Dashboard extends Component {
   render() {
     const actual = [];
     for (let i = 0; i < this.state.boards.length; i++) {
+      if(this.state.boards[i]){
       actual.push(
         <Board
           compData={this.state.boards[i]}
-          key={i}
+          key={actual.length}
+          compIndex={actual.length}
           options={this.state.options}
           addToBoard={this.addToBoard}
           updateBoard={this.updateBoard}
+          onClick={this.removeBoard}
         />
       );
     }
+  }
 
     return (
       <div className={`${classes.dashboard}`}>
