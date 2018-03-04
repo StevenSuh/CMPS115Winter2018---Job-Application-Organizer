@@ -45,11 +45,11 @@ class Dashboard extends Component {
 
   removeBoard(index){
     const id = this.state.boards[index]._id;
+    console.log(`${url}boards/${id}`);
     axios.delete(`${url}boards/${id}`);
     this.state.boards[index] = null;
+    this.state.options[index] = null;
     this.setState({ ...this.state, board: this.state.boards });
-
-    console.log(this.state.boards);
   }
 
   addToBoard(new_data, new_board_name, old_data_list, old_board_name) {
@@ -74,16 +74,19 @@ class Dashboard extends Component {
   }
 
   addNewBoard(){
-    console.log("hi")
-    console.log(this.state.boards);
     var name = prompt("Enter a name for the board.");
-    var newBoard = {
-      board_name: name, jobs: [], user_id: this.props.compUser.user_id, index: this.state.boards.length }
+    var newBoard = { 
+      board_name: name, 
+      jobs: [], 
+      user_id: this.props.compUser.user_id, 
+      index: this.state.boards.length 
+    }
 
     this.state.boards.push(newBoard);
+    this.state.options.push({ value: name, label: name });
 
     axios.post(`${url}boards/`, newBoard);
-    this.setState({ ...this.state, board: this.state.boards });
+    this.setState({ ...this.state, board: this.state.boards, options: this.state.options });
   }
 
   render() {

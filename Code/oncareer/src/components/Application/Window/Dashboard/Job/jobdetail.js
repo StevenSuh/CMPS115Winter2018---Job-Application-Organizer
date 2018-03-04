@@ -22,7 +22,8 @@ class JobDetail extends Component {
       date: compItem.date || '',
       description: compItem.description || '',
       index: this.props.compIndex || 0,
-      showUrl: !Boolean(this.props.compIndex)
+      showUrl: !Boolean(this.props.compIndex),
+      options: this.props.options.filter(elem => elem)
     };
 
     this.onOverlayClick = this.onOverlayClick.bind(this);
@@ -110,7 +111,7 @@ class JobDetail extends Component {
         <form>
           <div className={classes.job_detail_input_wrapper}>
             <label>Category</label>
-            <Select className={classes.category} options={this.props.options} onChange={this.onSelectChange} value={this.state.category} />
+            <Select className={classes.category} options={this.state.options} onChange={this.onSelectChange} value={this.state.category} />
           </div>
 
           <div className={classes.job_detail_input_wrapper}>
