@@ -126,7 +126,7 @@ class Board extends Component {
         <h4 className={`${classes.board_title}`}>
           {icon}
           {this.state.board_name}
-          <svg style={{ float: "right", marginRight: "40px"}} width="10" height="10" viewBox="0 0 14 14" onClick={() => this.props.onClick(this.props.compIndex)}>
+          <svg style={{ float: "right", marginRight: "40px", padding: "4px 0 6px 0", cursor: "pointer" }} width="10" height="10" viewBox="0 0 14 14" onClick={() => this.props.onClick(this.props.compIndex)}>
             <path d="M 14 1.41L 12.59 0L 7 5.59L 1.41 0L 0 1.41L 5.59 7L 0 12.59L 1.41 14L 7 8.41L 12.59 14L 14 12.59L 8.41 7L 14 1.41Z"/>
           </svg>
         </h4>

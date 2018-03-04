@@ -48,6 +48,8 @@ class Calendar extends React.Component {
       // connected
       console.log('gapi calendar connected!!!');
 
+      // click 'today'
+      document.getElementsByClassName('rbc-btn-group')[0].children[0].click();
       this.onViewChange();
     });
   }
@@ -95,11 +97,12 @@ class Calendar extends React.Component {
 
   deleteEvent(){
     const newState = { ...this.state, currEvent: -1, showDetail: false };
-    const deleted = newState.events.splice(this.state.currEvent, 1);
+    const deleted = newState.events[this.state.currEvent];
+    newState.events[this.state.currEvent] = null;
     console.log('deleted:', deleted);
     const itemRequest = gapi.client.calendar.events.delete({
       calendarId: this.props.compUser.user_email,
-      eventId: deleted[0].g_id
+      eventId: deleted.g_id
     });
 
     itemRequest.execute(() => {
@@ -151,7 +154,7 @@ class Calendar extends React.Component {
             start: new Date(startT),
             end: new Date(endT),
             description: items[i].description,
-            index: i,
+            index: eventData.length,
             g_id: items[i].id
           });
         }
@@ -161,7 +164,7 @@ class Calendar extends React.Component {
   }
 
   onEventClick(eventInfo) {
-    console.log(eventInfo);
+    console.log('eventInfo:', eventInfo);
     this.setState({ ...this.state, currEvent: eventInfo.index, showDetail: true });
   }
 
@@ -194,6 +197,7 @@ class Calendar extends React.Component {
             style={{height: '75%',
                     width: '80%'}}
             onSelectSlot={this.addEvent}
+            onNavigate={(date) => console.log(date)}
             onSelectEvent={this.onEventClick}
             //onEventDrop={this.moveEvent}
             //resizable
