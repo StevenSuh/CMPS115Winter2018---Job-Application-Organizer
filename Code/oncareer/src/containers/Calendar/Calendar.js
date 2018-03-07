@@ -72,15 +72,18 @@ class Calendar extends React.Component {
       },
       end: {
         dateTime: moment(endT).utc().format()
-      }
+      },
+      location: eventInfo.type
     }
 
     const itemRequest = gapi.client.calendar.events.insert({
-      calendarId: this.props.compUser.user_email
+      calendarId: this.props.compUser.user_email,
     }, googleEvent);
 
+      console.log('itemreq');
     itemRequest.execute(data => {
       console.log(data);
+      console.log('indata');
       var newEvent = {
         title: '',
         start: startT,
@@ -88,7 +91,8 @@ class Calendar extends React.Component {
         description: '',
         index: this.state.events.length,
         g_id: data.id,
-        type: eventInfo.type
+        type: data.location,
+        Location: eventInfo.type
       };
       const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
       newState.events.push(newEvent);
@@ -124,7 +128,8 @@ class Calendar extends React.Component {
       end: {
         dateTime: moment(data.end).utc().format()
       },
-      description: data.description
+      description: data.description,
+      location: data.type //def required
     }
 
     const itemRequest = gapi.client.calendar.events.update({
@@ -158,7 +163,8 @@ class Calendar extends React.Component {
             description: items[i].description,
             index: eventData.length,
             g_id: items[i].id,
-            type: items[i].type
+            type: items[i].location,
+
           });
         }
       }

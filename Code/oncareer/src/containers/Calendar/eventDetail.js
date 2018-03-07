@@ -26,6 +26,7 @@ class EventDetail extends Component {
       index: compEvent.index || '',
       g_id: compEvent.g_id || '',
       type: compEvent.type,
+      Location: compEvent.type
     };
 
     this.onOverlayClick = this.onOverlayClick.bind(this);
