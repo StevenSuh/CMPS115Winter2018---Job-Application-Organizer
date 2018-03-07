@@ -3,11 +3,19 @@ import moment from 'moment';
 
 import classes from './Calendar.css';
 
+const categoryList = [
+  {value: 'Other', displayValue: 'Other'},
+  {value: 'Deadline', displayValue: 'Deadline'},
+  {value: 'Interview', displayValue: 'Interview'}
+        ];
+
 class EventDetail extends Component {
   constructor(props) {
     super(props);
 
     const compEvent = this.props.compEvent;
+
+
 
     console.log(this);
     this.state = {
@@ -16,7 +24,8 @@ class EventDetail extends Component {
       end: moment(compEvent.end || '').format('YYYY-MM-DDTHH:mm'),
       description: compEvent.description || '',
       index: compEvent.index || '',
-      g_id: compEvent.g_id || ''
+      g_id: compEvent.g_id || '',
+      type: compEvent.type,
     };
 
     this.onOverlayClick = this.onOverlayClick.bind(this);
@@ -24,6 +33,8 @@ class EventDetail extends Component {
     this.onSaveClick = this.onSaveClick.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
   }
+
+
 
   onOverlayClick(event) {
     if (event.target === event.currentTarget) {
@@ -48,6 +59,7 @@ class EventDetail extends Component {
     const data = { ...this.state };
     data.start = new Date(data.start);
     data.end = new Date(data.end);
+    data.type = data.type;
     this.props.compUpdate(data);
 
     this.overlay.click();
@@ -58,6 +70,7 @@ class EventDetail extends Component {
     this.props.compDelete();
     this.overlay.click();
   }
+
 
   render() {
     return (
@@ -78,44 +91,51 @@ class EventDetail extends Component {
           <form>
             <div className={classes.event_detail_input_wrapper}>
               <label>Title</label>
-              <input 
-                type="text" 
-                value={this.state.title} 
-                name="title" 
+              <input
+                type="text"
+                value={this.state.title}
+                name="title"
                 onChange={this.onInputChange}
               />
             </div>
 
             <div className={classes.event_detail_input_wrapper}>
               <label>Start</label>
-              <input 
-                type="datetime-local" 
-                value={this.state.start} 
-                name="start" 
+              <input
+                type="datetime-local"
+                value={this.state.start}
+                name="start"
                 onChange={this.onInputChange}
               />
             </div>
 
             <div className={classes.event_detail_input_wrapper}>
               <label>End</label>
-              <input 
-                type="datetime-local" 
-                value={this.state.end} 
-                name="end" 
+              <input
+                type="datetime-local"
+                value={this.state.end}
+                name="end"
                 onChange={this.onInputChange}
               />
             </div>
 
             <div className={classes.event_detail_input_wrapper}>
               <label>Description</label>
-              <textarea 
-                rows="5" 
-                value={this.state.description} 
-                name="description" 
+              <textarea
+                rows="5"
+                value={this.state.description}
+                name="description"
                 onChange={this.onInputChange}
               />
             </div>
-
+            <div className={classes.event_detail_input_wrapper}>
+            <select name="type" id="type" onChange={this.onInputChange}>
+              {categoryList.map((e, key) => {
+                return <option key={e.value} value={e.value}>{e.displayValue}</option>;
+                })
+              }
+              </select>
+              </div>
             <button className={classes.event_detail_button_url}
               style={{ margin: '0 20px 15px 10px' }}
               onClick={this.onSaveClick}

@@ -41,6 +41,7 @@ class Calendar extends React.Component {
     this.cancelPopUp = this.cancelPopUp.bind(this);
     this.onViewChange = this.onViewChange.bind(this);
     this.onEventClick = this.onEventClick.bind(this);
+    this.eventStyleGetter = this.eventStyleGetter.bind(this);
   }
 
   componentDidMount() {
@@ -69,7 +70,7 @@ class Calendar extends React.Component {
       start: {
         dateTime: moment(startT).utc().format()
       },
-      end: { 
+      end: {
         dateTime: moment(endT).utc().format()
       }
     }
@@ -86,7 +87,8 @@ class Calendar extends React.Component {
         end: endT,
         description: '',
         index: this.state.events.length,
-        g_id: data.id
+        g_id: data.id,
+        type: eventInfo.type
       };
       const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
       newState.events.push(newEvent);
@@ -113,13 +115,13 @@ class Calendar extends React.Component {
   updateEvent(data) {
     const newState = { ...this.state, showDetail: false };
     newState.events[newState.currEvent] = data;
-    
+
     const googleEvent = {
       summary: data.title,
       start: {
         dateTime: moment(data.start).utc().format()
       },
-      end: { 
+      end: {
         dateTime: moment(data.end).utc().format()
       },
       description: data.description
@@ -155,7 +157,8 @@ class Calendar extends React.Component {
             end: new Date(endT),
             description: items[i].description,
             index: eventData.length,
-            g_id: items[i].id
+            g_id: items[i].id,
+            type: items[i].type
           });
         }
       }
@@ -168,21 +171,49 @@ class Calendar extends React.Component {
     this.setState({ ...this.state, currEvent: eventInfo.index, showDetail: true });
   }
 
+  eventStyleGetter(event, start, end, isSelected) {
+    console.log(event);
+    var backgroundColor = '#' + 'FFFFF';
+
+    if(event.type === 'Other'){
+      backgroundColor = 'blue';
+    }
+    if(event.type === 'Deadline'){
+      backgroundColor = 'red';
+    }
+    if(event.type === 'Interview'){
+      backgroundColor = 'purple';
+    }
+    var style = {
+        backgroundColor: backgroundColor,
+        borderRadius: '0px',
+        opacity: 0.8,
+        color: 'black',
+        border: '0px',
+        display: 'block'
+    };
+
+    return {
+        style: style
+    };
+
+  }
   renderDetail() {
     if (this.state.showDetail) {
       ReactDOM.render(
-        <EventDetail 
+        <EventDetail
           compEvent={this.state.events[this.state.currEvent]}
           compUpdate={this.updateEvent}
           compDelete={this.deleteEvent}
           compClick={this.cancelPopUp}
-        />, 
+        />,
         document.getElementById('modal')
       );
     } else {
       ReactDOM.render(null, document.getElementById('modal'));
-    }    
+    }
   }
+
 
   render() {
     console.log(this.state.events);
@@ -199,6 +230,7 @@ class Calendar extends React.Component {
             onSelectSlot={this.addEvent}
             onNavigate={(date) => console.log(date)}
             onSelectEvent={this.onEventClick}
+            eventPropGetter={(this.eventStyleGetter)}
             //onEventDrop={this.moveEvent}
             //resizable
             //onEventResize={this.resizeEvent}
