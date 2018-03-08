@@ -59,7 +59,7 @@ function parseJobs(body) {
   // job title
   let point = item.indexOf('data-tn-element="jobTitle"');
   point = item.indexOf('>', point)+1;
-  output.title = item.substring(point, item.indexOf('</a>', point)).replace('<b>', '').replace('</b>', '').trim();
+  output.title = item.substring(point, item.indexOf('</a>', point)).replace(/<b>/g, '').replace(/<\/b>/g, '').trim();
 
   // link
   point = item.lastIndexOf('href="', point)+6;
