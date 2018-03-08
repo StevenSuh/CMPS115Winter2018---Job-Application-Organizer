@@ -1,0 +1,138 @@
+.search_container {
+  float: left;
+  margin-left: 20px;
+  margin-right: 40px;
+  box-sizing: border-box;
+  background-color: #C9EEFF; 
+  padding: 10px;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.jobs_container {
+  position: relative;
+  float: left;
+  max-width: 70%;
+  max-height: 400px;
+  overflow: -moz-scrollbars-none;
+  overflow: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background-color: #C9EEFF;
+  padding: 8px;
+  border-radius: 5px;
+  /*visibility: hidden;*/
+}
+
+.listing_item {
+  box-sizing: border-box;
+  background-color: #ffffff; 
+  padding: 8px;
+  
+}
+
+.listing_container {
+  box-sizing: border-box;
+  background-color: #C9EEFF; 
+  padding: 0px 0px 8px 0px;
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.search_field {
+  float: top;
+  margin-bottom: 10px;
+}
+
+input{
+  width: 100%;
+  padding: 10px 20px;
+  display: inline-block;
+  border: 1px solid #1565C0;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color: #1565C0;
+  font-family: Roboto;
+  font-style: Regular;
+  font-size: 14px;
+}
+
+:-ms-input-placeholder {
+  color: #1565C0;
+  font-family: Roboto;
+  font-style: Regular;
+  font-size: 14px;
+}
+
+::-ms-input-placeholder {
+  color: #1565C0;
+  font-family: Roboto;
+  font-style: Regular;
+  font-size: 14px;
+}
+
+.button {
+  width: 100%;
+  background-color: #1565C0;
+  display: inline-block;
+  border: 1px solid #1565C0;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: white;
+  padding: 9px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button:hover {
+  background-color: #003F9A;
+}
+
+.button:active {
+  background-color: #003F9A;
+  transform: translateY(1px);
+}
+
+.job_title, .job_company, .job_location, .job_description, .job_date {
+  font-family: Roboto;
+  font-style: Regular;
+}
+
+.job_title {
+  font-size: large;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+.job_company {
+  float: left;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.job_location {
+  float: left;
+  margin-left: 4px;
+  margin-bottom: 2px;
+  color: #808080;
+}
+
+.job_description {
+  clear: left;
+  font-size: medium;
+}
+
+.job_date {
+  color: #808080;
+  font-size: small;
+  float: right;
+}
+
+.job_clear {
+  clear: both;
+}

@@ -6,6 +6,8 @@ import classes from './styles.css';
 
 import Calendar from '../../../containers/Calendar/Calendar';
 
+import Analytics from './Analytics';
+
 class Window extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +27,7 @@ class Window extends Component {
           view = <Calendar compUser={this.props.compUser} />
           break;
         case 'analytics':
+          view = <Analytics compUser={this.props.compUser} />
           break;
       }
     }
