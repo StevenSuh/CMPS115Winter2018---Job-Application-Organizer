@@ -130,7 +130,9 @@ class EventDetail extends Component {
               />
             </div>
             <div className={classes.event_detail_input_wrapper}>
-            <select name="type" id="type" onChange={this.onInputChange}>
+              <label> Type of event: </label>
+            <select name="type" id="type" onChange={this.onInputChange}
+              style = {{ marginTop: '8px', width: '100px' }}>
               {categoryList.map((e, key) => {
                 return <option key={e.value} value={e.value}>{e.displayValue}</option>;
                 })
