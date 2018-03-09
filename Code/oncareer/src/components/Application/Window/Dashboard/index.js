@@ -44,6 +44,10 @@ class Dashboard extends Component {
   }
 
   removeBoard(index){
+    console.log(this.state.boards);
+    console.log(this.state.options);
+    console.log(index);
+
     const id = this.state.boards[index]._id;
     console.log(`${url}boards/${id}`);
     axios.delete(`${url}boards/${id}`);
@@ -82,30 +86,40 @@ class Dashboard extends Component {
       index: this.state.boards.length 
     }
 
-    this.state.boards.push(newBoard);
-    this.state.options.push({ value: name, label: name });
+    axios.post(`${url}boards/`, newBoard)
+      .then(res => {
+        console.log(res.data);
 
-    axios.post(`${url}boards/`, newBoard);
-    this.setState({ ...this.state, board: this.state.boards, options: this.state.options });
+        this.state.boards.push(res.data);
+        this.state.options.push({ value: name, label: name });
+
+        this.setState({ 
+          ...this.state, 
+          board: this.state.boards, 
+          options: this.state.options
+        });
+      });
   }
 
   render() {
     const actual = [];
     for (let i = 0; i < this.state.boards.length; i++) {
-      if(this.state.boards[i]){
-      actual.push(
-        <Board
-          compData={this.state.boards[i]}
-          key={actual.length}
-          compIndex={actual.length}
-          options={this.state.options}
-          addToBoard={this.addToBoard}
-          updateBoard={this.updateBoard}
-          onClick={this.removeBoard}
-        />
-      );
+      if (this.state.boards[i]) {
+        actual.push(
+          <Board
+            compData={this.state.boards[i]}
+            key={actual.length}
+            compIndex={actual.length}
+            options={this.state.options}
+            addToBoard={this.addToBoard}
+            updateBoard={this.updateBoard}
+            onClick={this.removeBoard}
+          />
+        );
+      } else {
+        actual.push('');
+      }
     }
-  }
 
     return (
       <div className={`${classes.dashboard}`}>
