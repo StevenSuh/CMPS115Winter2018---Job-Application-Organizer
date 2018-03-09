@@ -4,6 +4,8 @@ import SearchBox from './SearchBox';
 import OutputItem from './OutputItem';
 import axios from 'axios';
 
+import url from '../../../../url';
+
 class JobListings extends Component {
 
   constructor(props) {
@@ -17,7 +19,7 @@ class JobListings extends Component {
 
   executeSearch(data, event) {
     this.setState({ ...this.state, searching: true });
-    axios.get(`http://localhost:3001/api/search?term=${data.term}&location=${data.location}&offset=${this.state.output.length}`)
+    axios.get(`${url}api/search?term=${data.term}&location=${data.location}&offset=${this.state.output.length}`)
       .then(response => {
         if (response.data) {
 
