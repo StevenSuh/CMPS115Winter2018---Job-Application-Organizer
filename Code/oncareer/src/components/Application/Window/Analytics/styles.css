@@ -93,7 +93,7 @@
 }
 
 ::placeholder {
-  color: #1565C0;
+  color: #AAA;
   font-family: Roboto;
   font-style: Regular;
   font-size: 14px;
@@ -146,6 +146,7 @@
   height: 130px;
   line-height: 130px;
   font-size: 24px;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .job_addToBoard {
@@ -230,3 +231,4 @@
     transform: rotate(360deg);
   }
 }
+

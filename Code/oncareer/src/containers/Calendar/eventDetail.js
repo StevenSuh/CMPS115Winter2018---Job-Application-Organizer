@@ -41,7 +41,9 @@ class EventDetail extends Component {
 
   onOverlayClick(event) {
     if (event.target === event.currentTarget) {
-      this.props.compClick();
+      console.log(classes.fadeOut);
+      this.overlay.classList.add(classes.fadeOut);
+      setTimeout(this.props.compClick, 200);
     }
   }
 
@@ -71,7 +73,7 @@ class EventDetail extends Component {
 
   onDeleteClick(event) {
     event.preventDefault();
-    this.props.compDelete();
+    this.props.compDelete(Boolean(this.props.compEvent.title));
     this.overlay.click();
   }
 
@@ -135,8 +137,9 @@ class EventDetail extends Component {
             <div className={classes.event_detail_input_wrapper}>
               <label>Type of event </label>
               <select name="type" id="type" onChange={this.onInputChange}
-                style = {{ width: '110px' }}
+                style = {{ width: '235px' }}
                 className={classes.event_category}
+                value={this.state.type}
               >
                 {categoryList.map((e, key) => <option key={e.value} value={e.value}>{e.displayValue}</option>)}
               </select>

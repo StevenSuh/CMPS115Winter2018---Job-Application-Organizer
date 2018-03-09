@@ -9,13 +9,13 @@ class SearchBox extends Component {
 
   onSearchClick(event) {
     event.preventDefault();
+    const term = document.getElementById('term');
+    const location = document.getElementById('location');
+
     const data = {};
-    data.term = document.getElementById('term').value;
-    data.location = document.getElementById('location').value;
-    if(data.term !== '' && data.location !== '') {
-      this.props.executeSearch(data, event);
-      //set css for jobs list to be visible
-    }
+    data.term = term.value;
+    data.location = location.value;
+    this.props.executeSearch(data, event);
   }
 
   render() {

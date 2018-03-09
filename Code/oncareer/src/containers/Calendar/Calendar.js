@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import classes from './styles.css';
+import classes from './Calendar.css';
 
 import EventDetail from './eventDetail';
 
@@ -66,54 +66,40 @@ class Calendar extends React.Component {
     if (startT.toString() === endT.toString()) {
       endT = endT.setDate(endT.getDate() + 1);
     }
-    const googleEvent = {
-      start: {
-        dateTime: moment(startT).utc().format()
-      },
-      end: {
-        dateTime: moment(endT).utc().format()
-      },
-      location: eventInfo.type || 'Other'
-    }
 
-    const itemRequest = gapi.client.calendar.events.insert({
-      calendarId: this.props.compUser.user_email,
-    }, googleEvent);
+    console.log('indata');
+    var newEvent = {
+      title: '',
+      start: startT,
+      end: endT,
+      description: '',
+      index: this.state.events.length,
+      Location: eventInfo.type || 'Other'
+    };
+    const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
+    newState.events.push(newEvent);
 
-      console.log('itemreq');
-    itemRequest.execute(data => {
-      console.log(data);
-      console.log('indata');
-      var newEvent = {
-        title: '',
-        start: startT,
-        end: endT,
-        description: '',
-        index: this.state.events.length,
-        g_id: data.id,
-        type: data.location,
-        Location: eventInfo.type || 'Other'
-      };
-      const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
-      newState.events.push(newEvent);
-
-      this.setState(newState);
-    });
+    this.setState(newState);
   }
 
-  deleteEvent(){
+  deleteEvent(exists){
     const newState = { ...this.state, currEvent: -1, showDetail: false };
     const deleted = newState.events[this.state.currEvent];
     newState.events[this.state.currEvent] = null;
     console.log('deleted:', deleted);
-    const itemRequest = gapi.client.calendar.events.delete({
-      calendarId: this.props.compUser.user_email,
-      eventId: deleted.g_id
-    });
 
-    itemRequest.execute(() => {
+    if (exists) {
+      const itemRequest = gapi.client.calendar.events.delete({
+        calendarId: this.props.compUser.user_email,
+        eventId: deleted.g_id
+      });
+
+      itemRequest.execute(() => {
+        this.setState(newState);
+      });
+    } else {
       this.setState(newState);
-    });
+    }
   }
 
   updateEvent(data) {
@@ -132,6 +118,11 @@ class Calendar extends React.Component {
       location: data.type //def required
     }
 
+    if (data.g_id) {
+      const itemRequest = gapi.client.calendar.events.insert({
+        calendarId: this.props.compUser.user_email
+      }, googleEvent);
+    }
     const itemRequest = gapi.client.calendar.events.update({
       calendarId: this.props.compUser.user_email,
       eventId: data.g_id
@@ -184,16 +175,16 @@ class Calendar extends React.Component {
       backgroundColor = '#757575';
     }
     if(event.type === 'Decision Deadline'){
-      backgroundColor = '#E57373';
+      backgroundColor = '#F44336';
     }
     if(event.type === 'Coding Challenge Deadline'){
-      backgroundColor = '#FDD835';
+      backgroundColor = '#FFCA28';
     }
     if(event.type === 'Phone Interview'){
       backgroundColor = '#81C784';
     }
     if(event.type === 'On-site Interview'){
-      backgroundColor = '#1565C0';
+      backgroundColor = '#2196F3';
     }
     var style = {
         backgroundColor: backgroundColor,

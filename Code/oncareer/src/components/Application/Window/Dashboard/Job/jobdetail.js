@@ -36,7 +36,9 @@ class JobDetail extends Component {
 
   onOverlayClick(event) {
     if (event.target === event.currentTarget) {
-      this.props.compClick();
+      this.overlay.classList.add(classes.fadeOut);
+      setTimeout(this.props.compClick, 200);
+      // this.props.compClick();
     }
   }
 

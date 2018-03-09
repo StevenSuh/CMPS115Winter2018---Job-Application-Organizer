@@ -122,7 +122,7 @@ class Board extends Component {
     );
 
     return (
-      <div id={this.state.board_name} >
+      <div id={this.state.board_name} className={classes.board}>
         <h4 className={`${classes.board_title}`}>
           {icon}
           {this.state.board_name}
