@@ -226,23 +226,27 @@ class Calendar extends React.Component {
     console.log(this.state.events);
     this.renderDetail();
     return (
-          // React Components in JSX look like HTML tags
-          <BigCalendar
-            selectable
-            defaultView="week"
-            events={this.state.events}
-            step={30}
-            style={{height: '75%',
-                    width: '80%'}}
-            onSelectSlot={this.addEvent}
-            onNavigate={(date) => console.log(date)}
-            onSelectEvent={this.onEventClick}
-            eventPropGetter={(this.eventStyleGetter)}
-            //onEventDrop={this.moveEvent}
-            //resizable
-            //onEventResize={this.resizeEvent}
-          />
-        )
+      <div style={{ width: '100%', height: '100%' }}>
+        <h2 style={{ padding: 0, margin: '0 0 25px', fontSize: '27px', fontWeight: 500 }}>
+          {this.props.compUser.user_name ? this.props.compUser.user_name + "'s Calendar" : ''}
+        </h2>
+        <BigCalendar
+          selectable
+          defaultView="week"
+          events={this.state.events}
+          step={30}
+          style={{height: '75%',
+                  width: '80%'}}
+          onSelectSlot={this.addEvent}
+          onNavigate={(date) => console.log(date)}
+          onSelectEvent={this.onEventClick}
+          eventPropGetter={(this.eventStyleGetter)}
+          //onEventDrop={this.moveEvent}
+          //resizable
+          //onEventResize={this.resizeEvent}
+        />
+      </div>
+    )
   }
 }
 

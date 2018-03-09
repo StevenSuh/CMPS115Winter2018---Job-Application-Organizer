@@ -78,7 +78,7 @@
   margin: 0 25px;
   max-height: calc(100vh - 50px - 30px - 32px - 27px);
   box-shadow: 0 5px 20px rgba(0,0,0, 0.05);
-  ovoerflow: -moz-scrollbars-none;
+  overflow: -moz-scrollbars-none;
   overflow: hidden;
   overflow-y: auto;
   border-radius: 5px;

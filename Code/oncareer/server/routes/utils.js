@@ -34,7 +34,6 @@ router.get('/search?', (req, res, next) => {
     `${indeed}?q=${term}&l=${location}&limit=10&start=${offset}&sort=date`, 
     function(err, response, body) {
       const result = parseJobs(body);
-      result.pop();
       
       return res.json(result);
     }
@@ -66,22 +65,26 @@ function parseJobs(body) {
   output.link = `https://www.indeed.com${item.substring(point, item.indexOf('"', point))}`;
 
   // company
-  point = item.indexOf('class="company"', point);
-  point = item.indexOf('>', item.indexOf('<a', point))+1;
-  output.company = item.substring(point, item.indexOf('<', point)).trim();
+  point = item.indexOf('class="company"');
+  point = item.indexOf('>', point)+1;
+  output.company = item.substring(point, item.indexOf('</span>', point)).trim();
+  if (output.company[0] === '<') {
+    point = item.indexOf('>', item.indexOf('<a', point))+1;
+    output.company = item.substring(point, item.indexOf('<', point)).trim();
+  }
 
   // location
-  point = item.indexOf('class="location"', point);
+  point = item.indexOf('class="location"');
   point = item.indexOf('>', point)+1;
   output.location = item.substring(point, item.indexOf('<', point)).trim();
 
   // description
-  point = item.indexOf('class=summary', point);
+  point = item.indexOf('class=summary');
   point = item.indexOf('>', point)+1;
-  output.description = item.substring(point, item.indexOf('</span>', point)).replace('<b>', '').replace('</b>', '').trim();
+  output.description = item.substring(point, item.indexOf('</span>', point)).replace(/<b>/g, '').replace(/<\/b>/g, '').trim();
 
   // date
-  point = item.indexOf('class="date"', point);
+  point = item.indexOf('class="date"');
   point = item.indexOf('>', point)+1;
   output.date = item.substring(point, item.indexOf('</span>', point)).trim();
 
