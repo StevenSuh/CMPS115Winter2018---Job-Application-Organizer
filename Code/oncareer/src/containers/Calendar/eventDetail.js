@@ -5,8 +5,10 @@ import classes from './Calendar.css';
 
 const categoryList = [
   {value: 'Other', displayValue: 'Other'},
-  {value: 'Deadline', displayValue: 'Deadline'},
-  {value: 'Interview', displayValue: 'Interview'}
+  {value: 'Decision Deadline', displayValue: 'Decision Deadline'},
+  {value: 'Phone Interview', displayValue: 'Phone Interview'},
+  {value: 'Coding Challenge Deadline', displayValue: 'Coding Challenge Deadline'},
+  {value: 'On-site Interview', displayValue: 'On-site Interview'}
         ];
 
 class EventDetail extends Component {
