@@ -41,9 +41,7 @@ class Application extends Component {
   render() {
     if (!Auth.isUserAuthenticated()) {
       return (
-        <div className="application">
-          bye
-        </div>
+        ''
       );
     }
 

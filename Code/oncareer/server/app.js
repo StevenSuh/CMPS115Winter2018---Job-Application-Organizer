@@ -39,7 +39,7 @@ app.use('/api', utils);
 
 if (process.env.NODE_ENV === 'production') {
   //
-  app.use(express.static('/build'));
+  app.use(express.static('build'));
 
   //
   const path = require('path');
