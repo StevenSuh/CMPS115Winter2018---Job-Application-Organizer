@@ -10,6 +10,8 @@ import Auth from '../Login/Auth';
 
 import url from '../../url';
 
+import classes from './styles.css';
+
 class Application extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +48,7 @@ class Application extends Component {
     }
 
     return (
-      <div className="application">
+      <div className={classes.application}>
         <div style={{ display: 'none' }}>
           <SignIn />
         </div>
