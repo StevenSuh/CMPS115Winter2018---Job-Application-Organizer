@@ -4,8 +4,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-//import './Calendar.css';
-//import 'react-big-calendar/lib/css/react-big-calendar.css';
+import classes from './styles.css';
 
 import EventDetail from './eventDetail';
 
@@ -226,7 +225,7 @@ class Calendar extends React.Component {
     console.log(this.state.events);
     this.renderDetail();
     return (
-      <div style={{ width: '100%', height: '100%' }}>
+      <div className={classes.calendar} style={{ width: '100%', height: '100%' }}>
         <h2 style={{ padding: 0, margin: '0 0 25px', fontSize: '27px', fontWeight: 500 }}>
           {this.props.compUser.user_name ? this.props.compUser.user_name + "'s Calendar" : ''}
         </h2>

@@ -49,7 +49,10 @@ class Application extends Component {
 
     return (
       <div className="application">
-        <SignIn />
+        <div style={{ display: 'none' }}>
+          <SignIn />
+        </div>
+        
         <Sidebar
           compUpdate={this.updateView}
           history={this.props.history}
