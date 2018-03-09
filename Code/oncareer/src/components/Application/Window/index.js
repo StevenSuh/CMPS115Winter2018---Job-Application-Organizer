@@ -4,7 +4,7 @@ import Dashboard from './Dashboard';
 
 import classes from './styles.css';
 
-import Calendar from '../../../containers/Calendar/Calendar';
+import Calendar from './Calendar/Calendar';
 
 import Analytics from './Analytics';
 
