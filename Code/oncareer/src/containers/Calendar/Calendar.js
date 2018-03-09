@@ -183,10 +183,16 @@ class Calendar extends React.Component {
     if(event.type === 'Other'){
       backgroundColor = '#757575';
     }
-    if(event.type === 'Deadline'){
+    if(event.type === 'Decision Deadline'){
       backgroundColor = '#E57373';
     }
-    if(event.type === 'Interview'){
+    if(event.type === 'Coding Challenge Deadline'){
+      backgroundColor = '#FDD835';
+    }
+    if(event.type === 'Phone Interview'){
+      backgroundColor = '#81C784';
+    }
+    if(event.type === 'On-site Interview'){
       backgroundColor = '#1565C0';
     }
     var style = {
