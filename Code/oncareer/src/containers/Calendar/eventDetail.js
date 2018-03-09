@@ -7,7 +7,7 @@ const categoryList = [
   {value: 'Other', displayValue: 'Other'},
   {value: 'Deadline', displayValue: 'Deadline'},
   {value: 'Interview', displayValue: 'Interview'}
-        ];
+];
 
 class EventDetail extends Component {
   constructor(props) {
@@ -25,8 +25,8 @@ class EventDetail extends Component {
       description: compEvent.description || '',
       index: compEvent.index || '',
       g_id: compEvent.g_id || '',
-      type: compEvent.type,
-      Location: compEvent.type
+      type: compEvent.type || 'Other',
+      Location: compEvent.type || 'Other'
     };
 
     this.onOverlayClick = this.onOverlayClick.bind(this);
@@ -44,6 +44,7 @@ class EventDetail extends Component {
   }
 
   onInputChange(event) {
+    console.log(event.target.name, event.target.value);
     this.setState({ ...this.state, [event.target.name]: event.target.value });
   }
 
@@ -130,15 +131,14 @@ class EventDetail extends Component {
               />
             </div>
             <div className={classes.event_detail_input_wrapper}>
-              <label> Type of event: </label>
-            <select name="type" id="type" onChange={this.onInputChange}
-              style = {{ marginTop: '8px', width: '100px' }}>
-              {categoryList.map((e, key) => {
-                return <option key={e.value} value={e.value}>{e.displayValue}</option>;
-                })
-              }
+              <label>Type of event </label>
+              <select name="type" id="type" onChange={this.onInputChange}
+                style = {{ width: '110px' }}
+                className={classes.event_category}
+              >
+                {categoryList.map((e, key) => <option key={e.value} value={e.value}>{e.displayValue}</option>)}
               </select>
-              </div>
+            </div>
             <button className={classes.event_detail_button_url}
               style={{ margin: '0 20px 15px 10px' }}
               onClick={this.onSaveClick}

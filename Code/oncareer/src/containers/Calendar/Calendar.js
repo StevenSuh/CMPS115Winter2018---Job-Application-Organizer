@@ -60,6 +60,7 @@ class Calendar extends React.Component {
   }
 
   addEvent(eventInfo){
+    console.log(eventInfo);
     var startT = new Date(eventInfo.start);
     var endT = new Date(eventInfo.end);
 
@@ -73,7 +74,7 @@ class Calendar extends React.Component {
       end: {
         dateTime: moment(endT).utc().format()
       },
-      location: eventInfo.type
+      location: eventInfo.type || 'Other'
     }
 
     const itemRequest = gapi.client.calendar.events.insert({
@@ -92,7 +93,7 @@ class Calendar extends React.Component {
         index: this.state.events.length,
         g_id: data.id,
         type: data.location,
-        Location: eventInfo.type
+        Location: eventInfo.type || 'Other'
       };
       const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
       newState.events.push(newEvent);
@@ -178,25 +179,25 @@ class Calendar extends React.Component {
   }
 
   eventStyleGetter(event, start, end, isSelected) {
-    console.log(event);
+    console.log('eventStyle:', event);
     var backgroundColor = '#' + 'FFFFF';
-
     if(event.type === 'Other'){
-      backgroundColor = 'blue';
+      backgroundColor = '#757575';
     }
     if(event.type === 'Deadline'){
-      backgroundColor = 'red';
+      backgroundColor = '#E57373';
     }
     if(event.type === 'Interview'){
-      backgroundColor = 'purple';
+      backgroundColor = '#1565C0';
     }
     var style = {
         backgroundColor: backgroundColor,
-        borderRadius: '0px',
-        opacity: 0.8,
-        color: 'black',
+        borderRadius: '10px',
+        opacity: 0.95,
+        color: 'white',
         border: '0px',
-        display: 'block'
+        display: 'block',
+        boxShadow: '0 5px 20px rgba(0,0,0,0.1)'
     };
 
     return {

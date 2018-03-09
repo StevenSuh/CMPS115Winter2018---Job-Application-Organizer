@@ -52,7 +52,8 @@
 
 /*.category div:first-child,*/
 .event_detail_input_wrapper input,
-.event_detail_input_wrapper textarea {
+.event_detail_input_wrapper textarea,
+.event_detail_input_wrapper select {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   width: calc(100% - 120px);
@@ -99,4 +100,10 @@
 
 .error {
   border-color: red !important;
+}
+
+.event_category * {
+  color: #000 !important;
+  border: none !important;
+  outline: none;
 }
