@@ -15,6 +15,7 @@ class Board extends Component {
     this.state = { board_name: this.props.compData.board_name, jobs: this.props.compData.jobs };
     this.addJob = this.addJob.bind(this);
     this.deleteJob = this.deleteJob.bind(this);
+    this.deleteIcon = this.deleteIcon.bind(this);
   }
 
   deleteJob(index) {
@@ -60,6 +61,14 @@ class Board extends Component {
     );
     this.props.updateBoard(newJob, this.state.board_name);
     this.setState({ ...this.state, jobs: newJob });
+  }
+
+  deleteIcon() {
+    return (
+      <svg style={{ float: "right", marginRight: "40px", padding: "4px 0 6px 0", cursor: "pointer" }} width="10" height="10" viewBox="0 0 14 14" onClick={() => this.props.onClick(this.props.compIndex)}>
+        <path d="M 14 1.41L 12.59 0L 7 5.59L 1.41 0L 0 1.41L 5.59 7L 0 12.59L 1.41 14L 7 8.41L 12.59 14L 14 12.59L 8.41 7L 14 1.41Z"/>
+      </svg>
+    );
   }
 
   render() {
@@ -122,13 +131,11 @@ class Board extends Component {
     );
 
     return (
-      <div id={this.state.board_name} >
+      <div id={this.state.board_name} className={classes.board}>
         <h4 className={`${classes.board_title}`}>
           {icon}
           {this.state.board_name}
-          <svg style={{ float: "right", marginRight: "40px", padding: "4px 0 6px 0", cursor: "pointer" }} width="10" height="10" viewBox="0 0 14 14" onClick={() => this.props.onClick(this.props.compIndex)}>
-            <path d="M 14 1.41L 12.59 0L 7 5.59L 1.41 0L 0 1.41L 5.59 7L 0 12.59L 1.41 14L 7 8.41L 12.59 14L 14 12.59L 8.41 7L 14 1.41Z"/>
-          </svg>
+          {icon ? '' : this.deleteIcon()}
         </h4>
 
         <div className={`${classes.jobs}`}>

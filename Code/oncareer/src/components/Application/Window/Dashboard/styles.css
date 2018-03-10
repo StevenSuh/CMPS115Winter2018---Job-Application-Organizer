@@ -1,3 +1,16 @@
+.dashboard {
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .title {
   padding: 0;
   margin: 0;
@@ -11,9 +24,14 @@
   align-items: flex-start;  
 }
 
+.board {
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
 .board_add {
   min-width: 250px;
   max-width: 250px;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .board_add_button {
@@ -78,7 +96,7 @@
   margin: 0 25px;
   max-height: calc(100vh - 50px - 30px - 32px - 27px);
   box-shadow: 0 5px 20px rgba(0,0,0, 0.05);
-  ovoerflow: -moz-scrollbars-none;
+  overflow: -moz-scrollbars-none;
   overflow: hidden;
   overflow-y: auto;
   border-radius: 5px;

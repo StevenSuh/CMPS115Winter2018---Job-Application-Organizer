@@ -4,8 +4,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-//import './Calendar.css';
-//import 'react-big-calendar/lib/css/react-big-calendar.css';
+import classes from './Calendar.css';
 
 import EventDetail from './eventDetail';
 
@@ -60,60 +59,47 @@ class Calendar extends React.Component {
   }
 
   addEvent(eventInfo){
+    console.log(eventInfo);
     var startT = new Date(eventInfo.start);
     var endT = new Date(eventInfo.end);
 
     if (startT.toString() === endT.toString()) {
       endT = endT.setDate(endT.getDate() + 1);
     }
-    const googleEvent = {
-      start: {
-        dateTime: moment(startT).utc().format()
-      },
-      end: {
-        dateTime: moment(endT).utc().format()
-      },
-      location: eventInfo.type
-    }
 
-    const itemRequest = gapi.client.calendar.events.insert({
-      calendarId: this.props.compUser.user_email,
-    }, googleEvent);
+    console.log('indata');
+    var newEvent = {
+      title: '',
+      start: startT,
+      end: endT,
+      description: '',
+      index: this.state.events.length,
+      Location: eventInfo.type || 'Other'
+    };
+    const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
+    newState.events.push(newEvent);
 
-      console.log('itemreq');
-    itemRequest.execute(data => {
-      console.log(data);
-      console.log('indata');
-      var newEvent = {
-        title: '',
-        start: startT,
-        end: endT,
-        description: '',
-        index: this.state.events.length,
-        g_id: data.id,
-        type: data.location,
-        Location: eventInfo.type
-      };
-      const newState = { ...this.state, currEvent: newEvent.index, showDetail: true };
-      newState.events.push(newEvent);
-
-      this.setState(newState);
-    });
+    this.setState(newState);
   }
 
-  deleteEvent(){
+  deleteEvent(exists){
     const newState = { ...this.state, currEvent: -1, showDetail: false };
     const deleted = newState.events[this.state.currEvent];
     newState.events[this.state.currEvent] = null;
     console.log('deleted:', deleted);
-    const itemRequest = gapi.client.calendar.events.delete({
-      calendarId: this.props.compUser.user_email,
-      eventId: deleted.g_id
-    });
 
-    itemRequest.execute(() => {
+    if (exists) {
+      const itemRequest = gapi.client.calendar.events.delete({
+        calendarId: this.props.compUser.user_email,
+        eventId: deleted.g_id
+      });
+
+      itemRequest.execute(() => {
+        this.setState(newState);
+      });
+    } else {
       this.setState(newState);
-    });
+    }
   }
 
   updateEvent(data) {
@@ -132,6 +118,11 @@ class Calendar extends React.Component {
       location: data.type //def required
     }
 
+    if (data.g_id) {
+      const itemRequest = gapi.client.calendar.events.insert({
+        calendarId: this.props.compUser.user_email
+      }, googleEvent);
+    }
     const itemRequest = gapi.client.calendar.events.update({
       calendarId: this.props.compUser.user_email,
       eventId: data.g_id
@@ -178,31 +169,31 @@ class Calendar extends React.Component {
   }
 
   eventStyleGetter(event, start, end, isSelected) {
-    console.log(event);
+    console.log('eventStyle:', event);
     var backgroundColor = '#' + 'FFFFF';
-
     if(event.type === 'Other'){
-      backgroundColor = 'blue';
+      backgroundColor = '#757575';
     }
     if(event.type === 'Decision Deadline'){
-      backgroundColor = 'red';
+      backgroundColor = '#F44336';
     }
     if(event.type === 'Coding Challenge Deadline'){
-      backgroundColor = 'yellow';
+      backgroundColor = '#FFCA28';
     }
     if(event.type === 'Phone Interview'){
-      backgroundColor = 'green';
+      backgroundColor = '#81C784';
     }
     if(event.type === 'On-site Interview'){
-      backgroundColor = 'purple';
+      backgroundColor = '#2196F3';
     }
     var style = {
         backgroundColor: backgroundColor,
-        borderRadius: '0px',
-        opacity: 0.8,
-        color: 'black',
+        borderRadius: '10px',
+        opacity: 0.95,
+        color: 'white',
         border: '0px',
-        display: 'block'
+        display: 'block',
+        boxShadow: '0 5px 20px rgba(0,0,0,0.1)'
     };
 
     return {
@@ -231,23 +222,27 @@ class Calendar extends React.Component {
     console.log(this.state.events);
     this.renderDetail();
     return (
-          // React Components in JSX look like HTML tags
-          <BigCalendar
-            selectable
-            defaultView="week"
-            events={this.state.events}
-            step={30}
-            style={{height: '75%',
-                    width: '80%'}}
-            onSelectSlot={this.addEvent}
-            onNavigate={(date) => console.log(date)}
-            onSelectEvent={this.onEventClick}
-            eventPropGetter={(this.eventStyleGetter)}
-            //onEventDrop={this.moveEvent}
-            //resizable
-            //onEventResize={this.resizeEvent}
-          />
-        )
+      <div className={classes.calendar} style={{ width: '100%', height: '100%' }}>
+        <h2 style={{ padding: 0, margin: '0 0 25px', fontSize: '27px', fontWeight: 500 }}>
+          {this.props.compUser.user_name ? this.props.compUser.user_name + "'s Calendar" : ''}
+        </h2>
+        <BigCalendar
+          selectable
+          defaultView="week"
+          events={this.state.events}
+          step={30}
+          style={{height: '75%',
+                  width: '80%'}}
+          onSelectSlot={this.addEvent}
+          onNavigate={(date) => console.log(date)}
+          onSelectEvent={this.onEventClick}
+          eventPropGetter={(this.eventStyleGetter)}
+          //onEventDrop={this.moveEvent}
+          //resizable
+          //onEventResize={this.resizeEvent}
+        />
+      </div>
+    )
   }
 }
 

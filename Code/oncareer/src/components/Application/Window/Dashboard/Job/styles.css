@@ -12,6 +12,16 @@
   margin: 12px 0;
   padding: 8px;
   cursor: pointer;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .job_add {
@@ -93,6 +103,10 @@
   }
 }
 
+.fadeOut {
+  opacity: 0;
+}
+
 .job_detail_overlay {
   position: absolute;
   width: 100vw;
@@ -102,6 +116,7 @@
   background-color: rgba(0,0,0,0.5);
   z-index: 1;
   animation: fadeIn 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: opacity 0.175s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .job_detail_form {

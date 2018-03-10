@@ -10,6 +10,8 @@ import Auth from '../Login/Auth';
 
 import url from '../../url';
 
+import classes from './styles.css';
+
 class Application extends Component {
   constructor(props) {
     super(props);
@@ -41,15 +43,16 @@ class Application extends Component {
   render() {
     if (!Auth.isUserAuthenticated()) {
       return (
-        <div className="application">
-          bye
-        </div>
+        ''
       );
     }
 
     return (
-      <div className="application">
-        <SignIn />
+      <div className={classes.application}>
+        <div style={{ display: 'none' }}>
+          <SignIn />
+        </div>
+        
         <Sidebar
           compUpdate={this.updateView}
           history={this.props.history}

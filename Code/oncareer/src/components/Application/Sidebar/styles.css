@@ -1,7 +1,7 @@
 .sidebar {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
   background-color: #1565C0;
   width: 60px;
   height: 100vh;
@@ -30,7 +30,7 @@
   padding: 0;
   background-color: rgba(0,0,0,0);
   cursor: pointer;
-  transition: background-color 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition: background-color 0.1s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .button svg path {
@@ -45,6 +45,7 @@
   border-radius: 50%;
   line-height: 37.5px;
   font-size: 27px;
+  font-weight: 500;
   color: #1565c0;  
 }
 

@@ -34,7 +34,6 @@ router.get('/search?', (req, res, next) => {
     `${indeed}?q=${term}&l=${location}&limit=10&start=${offset}&sort=date`, 
     function(err, response, body) {
       const result = parseJobs(body);
-      result.pop();
       
       return res.json(result);
     }
@@ -59,29 +58,33 @@ function parseJobs(body) {
   // job title
   let point = item.indexOf('data-tn-element="jobTitle"');
   point = item.indexOf('>', point)+1;
-  output.title = item.substring(point, item.indexOf('</a>', point)).replace(/<b>/g, '').replace(/<\/b>/g, '').trim();
+  output.title = item.substring(point, item.indexOf('</a>', point)).replace(/<b>/g, '').replace(/<\/b>/g, '').replace(/&amp;/g, '&').trim();
 
   // link
   point = item.lastIndexOf('href="', point)+6;
   output.link = `https://www.indeed.com${item.substring(point, item.indexOf('"', point))}`;
 
   // company
-  point = item.indexOf('class="company"', point);
-  point = item.indexOf('>', item.indexOf('<a', point))+1;
-  output.company = item.substring(point, item.indexOf('<', point)).trim();
+  point = item.indexOf('class="company"');
+  point = item.indexOf('>', point)+1;
+  output.company = item.substring(point, item.indexOf('</span>', point)).replace(/&amp;/g, '&').trim();
+  if (output.company[0] === '<') {
+    point = item.indexOf('>', item.indexOf('<a', point))+1;
+    output.company = item.substring(point, item.indexOf('<', point)).replace(/&amp;/g, '&').trim();
+  }
 
   // location
-  point = item.indexOf('class="location"', point);
+  point = item.indexOf('class="location"');
   point = item.indexOf('>', point)+1;
   output.location = item.substring(point, item.indexOf('<', point)).trim();
 
   // description
-  point = item.indexOf('class=summary', point);
+  point = item.indexOf('class=summary');
   point = item.indexOf('>', point)+1;
-  output.description = item.substring(point, item.indexOf('</span>', point)).replace('<b>', '').replace('</b>', '').trim();
+  output.description = item.substring(point, item.indexOf('</span>', point)).replace(/<b>/g, '').replace(/<\/b>/g, '').replace(/&amp;/g, '&').trim();
 
   // date
-  point = item.indexOf('class="date"', point);
+  point = item.indexOf('class="date"');
   point = item.indexOf('>', point)+1;
   output.date = item.substring(point, item.indexOf('</span>', point)).trim();
 
