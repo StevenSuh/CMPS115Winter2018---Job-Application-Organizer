@@ -1,0 +1,22 @@
+[
+  {
+    "user_name": "John Doe",
+    "user_email": "john.doe@gmail.com",
+    "user_id": 1
+  },
+  {
+    "user_name": "John Appleseed",
+    "user_email": "john.appleseed@gmail.com",
+    "user_id": 2
+  },
+  {
+    "user_name": "Hello World",
+    "user_email": "hello.world@gmail.com",
+    "user_id": 3
+  },
+  {
+    "user_name": "Bye World",
+    "user_email": "bye.world@gmail.com",
+    "user_id": 4
+  }
+]
