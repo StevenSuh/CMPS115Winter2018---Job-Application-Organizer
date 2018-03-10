@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
+const h2p = require('html2plaintext');
 
 router.get('/parsing?', (req, res, next) => {
   // request.body
@@ -58,7 +59,7 @@ function parseJobs(body) {
   // job title
   let point = item.indexOf('data-tn-element="jobTitle"');
   point = item.indexOf('>', point)+1;
-  output.title = item.substring(point, item.indexOf('</a>', point)).replace(/<b>/g, '').replace(/<\/b>/g, '').replace(/&amp;/g, '&').trim();
+  output.title = h2p(item.substring(point, item.indexOf('</a>', point))).trim();
 
   // link
   point = item.lastIndexOf('href="', point)+6;
@@ -67,10 +68,10 @@ function parseJobs(body) {
   // company
   point = item.indexOf('class="company"');
   point = item.indexOf('>', point)+1;
-  output.company = item.substring(point, item.indexOf('</span>', point)).replace(/&amp;/g, '&').trim();
+  output.company = h2p(item.substring(point, item.indexOf('</span>', point))).trim();
   if (output.company[0] === '<') {
     point = item.indexOf('>', item.indexOf('<a', point))+1;
-    output.company = item.substring(point, item.indexOf('<', point)).replace(/&amp;/g, '&').trim();
+    output.company = h2p(item.substring(point, item.indexOf('<', point))).trim();
   }
 
   // location
@@ -81,7 +82,7 @@ function parseJobs(body) {
   // description
   point = item.indexOf('class=summary');
   point = item.indexOf('>', point)+1;
-  output.description = item.substring(point, item.indexOf('</span>', point)).replace(/<b>/g, '').replace(/<\/b>/g, '').replace(/&amp;/g, '&').trim();
+  output.description = h2p(item.substring(point, item.indexOf('</span>', point))).trim();
 
   // date
   point = item.indexOf('class="date"');
