@@ -15,7 +15,13 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://godmod:MongoDBRoks321!@ds257077.mlab.com:57077/oncareerdb')
-  .then(() =>  console.log('connection succesful'))
+  .then(() =>  {
+    console.log('connection succesful');
+    
+    if (process.env.NODE_ENV !== 'production') {
+      require('../test/test')();
+    }
+  })
   .catch((err) => console.error(err));
 
 app.use(bodyParser.urlencoded({ extended: false }));
