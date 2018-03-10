@@ -20,7 +20,7 @@ class LandingPage extends React.Component {
     render(){
         return (
         <div className={classes.landingPage}>
-          <header className={classes.header}>
+          <header id='title' className={classes.header}>
             <h2 className={classes.title}>
               onCareer
             </h2>

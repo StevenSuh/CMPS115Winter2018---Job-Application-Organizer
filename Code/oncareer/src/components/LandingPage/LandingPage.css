@@ -17,6 +17,25 @@
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.title {
+    animation: myfirst 1s 1;
+    animation-direction: alternate;
+}
+
+@-webkit-keyframes myfirst {
+    0%   {height: 200%;}
+    100%  {height: 55%;}
+}
+
 .header {
   position: relative;
   width: 100%;
