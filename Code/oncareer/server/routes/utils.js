@@ -130,9 +130,9 @@ function parseIndeed(body) {
 
   // description
   // location
-  point = body.indexOf('class="location"');
-  point = body.indexOf('>', point)+1;
-  output.description = body.substring(point, body.indexOf('<', point));
+  point = body.indexOf('id="where"');
+  point = body.lastIndexOf('value="', point)+7;
+  output.description = body.substring(point, body.indexOf('"', point));
 
   return output;
 }
