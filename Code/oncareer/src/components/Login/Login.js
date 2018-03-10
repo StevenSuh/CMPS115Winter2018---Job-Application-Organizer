@@ -46,7 +46,8 @@ class Login extends React.Component {
     })
     console.log(this.state.data)
   }
-
+  //check first if the user is authenticated, if they are not in db, we Create
+  //a board for them, else we grab their preexisting board from the DB
   configureUser(data, user){
     if(Auth.isUserAuthenticated()) {
       // already logged in
@@ -99,6 +100,8 @@ class Login extends React.Component {
     }
   }
 
+  // aaxios request to get information from the user and put it in a object
+  //which is sent to the state for later use.
   getUser(id, name, email){
     var obj = {id, name, email}
     var url = this.state.url + "users/acc/" + id
@@ -110,7 +113,7 @@ class Login extends React.Component {
         this.configureUser(this.state.data, user)
       })
   }
-
+  //logs the user out
   logOut(){
       Auth.deauthenticateUser()
   }

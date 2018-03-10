@@ -23,7 +23,7 @@ class Window extends Component {
         case 'dashboard':
           view = <Dashboard compUser={this.props.compUser} />
           break;
-        case 'calendar':
+        case 'calendar': 
           view = <Calendar compUser={this.props.compUser} />
           break;
         case 'analytics':

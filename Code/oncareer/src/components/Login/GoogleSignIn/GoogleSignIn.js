@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import classes from './GoogleSignIn.css';
 import Auth from '../Auth'
 
+
+//signs the user out
 function getGapi(callback){
   var auth2 = gapi.auth2.getAuthInstance();
 
@@ -20,7 +22,7 @@ class GoogleSignIn extends React.Component {
       this.onSignIn = this.onSignIn.bind(this)
       this.signOut = this.signOut.bind(this)
   }
-
+  //Mounts the google sign in button on landing page and initialized google api
   componentDidMount() {
       console.log('GoogleSignIn mounted')
       Auth.storeGapi(gapi);
@@ -34,11 +36,14 @@ class GoogleSignIn extends React.Component {
       });
   }
 
+  //signs the user out of google, unathorizes them.
   signOut() {
     Auth.logOut()
     this.props.logOut()
   }
 
+  //when the user signs in through google, we grab all of their information
+  //provided by google and put this into the state for later use.
   onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -48,6 +53,8 @@ class GoogleSignIn extends React.Component {
       this.props.getUser(profile.getId(), profile.getName(), profile.getEmail())
   }
 
+  //We conditionally render the google sign in button if the user is not already logged in
+  //else we display the redirect to app which sends the user to the dashboard / application.
   renderContent() {
     let isSignedIn = false;
 

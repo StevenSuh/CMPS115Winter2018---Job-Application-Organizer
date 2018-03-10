@@ -43,6 +43,8 @@ class Dashboard extends Component {
     this.setState(tempState);
   }
 
+  //when the user clicks the X by a new board, it will de-render it and remove
+  //all the information from the database.
   removeBoard(index){
     console.log(this.state.boards);
     console.log(this.state.options);
@@ -77,13 +79,15 @@ class Dashboard extends Component {
     });
   }
 
+  //When the add new board button is clicked, the user is prompted for a board Name
+  //from there this information is used to create a new board and update the database
   addNewBoard(){
     var name = prompt("Enter a name for the board.");
-    var newBoard = { 
-      board_name: name, 
-      jobs: [], 
-      user_id: this.props.compUser.user_id, 
-      index: this.state.boards.length 
+    var newBoard = {
+      board_name: name,
+      jobs: [],
+      user_id: this.props.compUser.user_id,
+      index: this.state.boards.length
     }
 
     axios.post(`${url}boards/`, newBoard)
@@ -93,9 +97,9 @@ class Dashboard extends Component {
         this.state.boards.push(res.data);
         this.state.options.push({ value: name, label: name });
 
-        this.setState({ 
-          ...this.state, 
-          board: this.state.boards, 
+        this.setState({
+          ...this.state,
+          board: this.state.boards,
           options: this.state.options
         });
       });

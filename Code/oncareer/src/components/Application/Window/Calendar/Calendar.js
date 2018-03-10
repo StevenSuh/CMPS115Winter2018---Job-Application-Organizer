@@ -27,12 +27,13 @@ class Calendar extends React.Component {
     super(props);
 
     this.state = {
-      events: [],
+      events: [], //events
       calendars: [],
       showDetail: false,
       currEvent: -1
     }
 
+    //initialize functions
     this.renderDetail = this.renderDetail.bind(this);
     this.addEvent = this.addEvent.bind(this);
     this.updateEvent = this.updateEvent.bind(this);
@@ -43,6 +44,7 @@ class Calendar extends React.Component {
     this.eventStyleGetter = this.eventStyleGetter.bind(this);
   }
 
+  //connect to calendar google api
   componentDidMount() {
     gapi.client.load('calendar', 'v3', () => {
       // connected
@@ -53,11 +55,14 @@ class Calendar extends React.Component {
       this.onViewChange();
     });
   }
-
+  //turn off showDetail in state, this removes popup modal for creationf of events
   cancelPopUp() {
     this.setState({ ...this.state, showDetail: false });
   }
 
+  //Grabs start and end time from event info which is returned from the user
+  //mouse movement. All data put into newEvent object and added to state
+  //and pushed to Google API
   addEvent(eventInfo){
     console.log(eventInfo);
     var startT = new Date(eventInfo.start);
@@ -82,6 +87,9 @@ class Calendar extends React.Component {
     this.setState(newState);
   }
 
+  //if an event is found in the state / google api events, upon pressing delete
+  //the event detail component, the event will be removed from google and state.
+  // the modal will also be closed.
   deleteEvent(exists){
     const newState = { ...this.state, currEvent: -1, showDetail: false };
     const deleted = newState.events[this.state.currEvent];
@@ -102,6 +110,9 @@ class Calendar extends React.Component {
     }
   }
 
+  //After clicking on a previously made event,
+  // new modified start/end/description/title/category will be saved and
+  //pushed to state and google calendars db.
   updateEvent(data) {
     const newState = { ...this.state, showDetail: false };
     newState.events[newState.currEvent] = data;
@@ -134,6 +145,7 @@ class Calendar extends React.Component {
     });
   }
 
+  //Whenever switched from weekly, monthly, e.t.c view we reload the events
   onViewChange() {
     const d = new Date();
 
@@ -163,11 +175,15 @@ class Calendar extends React.Component {
     });
   }
 
+  //when you click on an event the showDetail / eventDetail modal will pop up
+  //as we modify this to true in the state. also grab the event info and preload
+  //it into the modal
   onEventClick(eventInfo) {
     console.log('eventInfo:', eventInfo);
     this.setState({ ...this.state, currEvent: eventInfo.index, showDetail: true });
   }
-
+  // this checks all of the events and sets the color of the event based on the
+  //category /type of event that was or is made.
   eventStyleGetter(event, start, end, isSelected) {
     console.log('eventStyle:', event);
     var backgroundColor = '#' + 'FFFFF';
@@ -201,6 +217,8 @@ class Calendar extends React.Component {
     };
 
   }
+
+  //Render / display the eventdetail modal / component to modify event details
   renderDetail() {
     if (this.state.showDetail) {
       ReactDOM.render(
@@ -217,7 +235,7 @@ class Calendar extends React.Component {
     }
   }
 
-
+  //jsx code to render the react-big-calendar.
   render() {
     console.log(this.state.events);
     this.renderDetail();

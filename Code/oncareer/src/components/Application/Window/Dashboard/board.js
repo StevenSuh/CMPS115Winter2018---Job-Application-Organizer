@@ -62,7 +62,7 @@ class Board extends Component {
     this.props.updateBoard(newJob, this.state.board_name);
     this.setState({ ...this.state, jobs: newJob });
   }
-
+  //this is the icon or X that will that is hooked up to delete items.
   deleteIcon() {
     return (
       <svg style={{ float: "right", marginRight: "40px", padding: "4px 0 6px 0", cursor: "pointer" }} width="10" height="10" viewBox="0 0 14 14" onClick={() => this.props.onClick(this.props.compIndex)}>
