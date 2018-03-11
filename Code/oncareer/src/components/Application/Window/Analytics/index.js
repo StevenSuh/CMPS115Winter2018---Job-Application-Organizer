@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import JobListings from './JobListings';
-
+import Graph from "./Graph";
 import classes from './styles.css';
 
 class Analytics extends Component {
@@ -19,6 +19,8 @@ class Analytics extends Component {
           {this.props.compUser.user_name ? this.props.compUser.user_name + "'s Analytics" : ''}
         </h2>
         <div>
+          <Graph />
+          <br/>
           <JobListings />
         </div>
       </div>
