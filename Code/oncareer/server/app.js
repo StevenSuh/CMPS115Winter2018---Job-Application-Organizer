@@ -44,13 +44,11 @@ app.use('/boards', boards);
 app.use('/api', utils);
 
 if (process.env.NODE_ENV === 'production') {
-  //
   app.use(express.static('build'));
 
-  //
   const path = require('path');
   app.get('*', (request, result) => {
-    result.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    result.sendFile(path.resolve(__dirname, '../build/', 'index.html'));
   });
 }
 
