@@ -129,15 +129,17 @@ class Calendar extends React.Component {
       location: data.type //def required
     }
 
-    if (data.g_id) {
-      const itemRequest = gapi.client.calendar.events.insert({
+    let itemRequest;
+    if (!data.g_id) {
+      itemRequest = gapi.client.calendar.events.insert({
         calendarId: this.props.compUser.user_email
       }, googleEvent);
+    } else {
+      itemRequest = gapi.client.calendar.events.update({
+        calendarId: this.props.compUser.user_email,
+        eventId: data.g_id
+      }, googleEvent);
     }
-    const itemRequest = gapi.client.calendar.events.update({
-      calendarId: this.props.compUser.user_email,
-      eventId: data.g_id
-    }, googleEvent);
 
     itemRequest.execute(data => {
       console.log('Updated event!');
