@@ -20,6 +20,7 @@ class Analytics extends Component {
         </h2>
         <div>
           <Graph />
+          <br/>
           <JobListings />
         </div>
       </div>
