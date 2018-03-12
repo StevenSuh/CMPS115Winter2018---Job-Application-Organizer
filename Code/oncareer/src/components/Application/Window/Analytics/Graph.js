@@ -12,6 +12,7 @@ class Graph extends Component {
 
 		const newDay = [];
 		const currDate = new Date();
+		currDate.setDate(currDate.getDate()-7);
 		for(let i = 0; i < 7; i++){
 			newDay.push(
 				moment(currDate.setDate(currDate.getDate() - currDate.getDay()+i)).format('YYYY-MM-DD')
@@ -27,7 +28,7 @@ class Graph extends Component {
 		      {name: '3/10', uv: 2, },
 		      {name: '3/11', uv: 4  },
 			],
-			boards: [], 
+			boards: [],
 			counter: [{date: '', amt: 0},
 						{date: '', amt: 0},
 						{date: '', amt: 0},
@@ -67,7 +68,7 @@ class Graph extends Component {
 			const totalJobs = board['jobs'].length + board1['jobs'].length + board2['jobs'].length;
 
 			const newRate = [];
-			newRate.push([{name: 'Interview + Offer', amt: totalJobs - board['jobs'].length}, 
+			newRate.push([{name: 'Interview + Offer', amt: totalJobs - board['jobs'].length},
 						  {name: 'Applied', amt: board['jobs'].length}]);
 			newRate.push([{name: 'Interview', amt: board2['jobs'].length},
 						  {name: 'Offer', amt: board1['jobs'].length},
@@ -89,7 +90,7 @@ class Graph extends Component {
 	        <CartesianGrid strokeDasharray="3 3"/>
 	        <Tooltip/>
 	        <Bar dataKey="amt" fill="#1565c0" />
-	        </BarChart> 
+	        </BarChart>
 	        </span>
 
 	        <span style={{ display: 'inline-block' }}>
@@ -105,10 +106,3 @@ class Graph extends Component {
 	}
 }
 export default Graph;
-
-
-
-
-
-
-
