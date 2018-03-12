@@ -12,10 +12,10 @@ class Graph extends Component {
 
 		const newDay = [];
 		const currDate = new Date();
-		currDate.setDate(currDate.getDate()-7);
+		const oldDate = new Date(currDate.setDate(currDate.getDate()-6))
 		for(let i = 0; i < 7; i++){
 			newDay.push(
-				moment(currDate.setDate(currDate.getDate() - currDate.getDay()+i)).format('YYYY-MM-DD')
+				moment(oldDate.setDate(currDate.getDate() + i)).format('YYYY-MM-DD')
 			);
 		}
 
