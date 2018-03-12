@@ -89,20 +89,21 @@ class Dashboard extends Component {
       user_id: this.props.compUser.user_id,
       index: this.state.boards.length
     }
+    if(newBoard.board_name != '' && newBoard.board_name != null) {
+      axios.post(`${url}boards/`, newBoard)
+        .then(res => {
+          console.log(res.data);
 
-    axios.post(`${url}boards/`, newBoard)
-      .then(res => {
-        console.log(res.data);
+          this.state.boards.push(res.data);
+          this.state.options.push({ value: name, label: name });
 
-        this.state.boards.push(res.data);
-        this.state.options.push({ value: name, label: name });
-
-        this.setState({
-          ...this.state,
-          board: this.state.boards,
-          options: this.state.options
+          this.setState({
+            ...this.state,
+            board: this.state.boards,
+            options: this.state.options
+          });
         });
-      });
+      }
   }
 
   render() {
